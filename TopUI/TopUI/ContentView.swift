@@ -12,14 +12,19 @@ struct ContentView: View {
 
     var body: some View {
         VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+            ForEach(model.coreUsages) { coreUsage in
+                HStack(spacing: 10) {
+                    Text("Core: \(coreUsage.id)")
+
+                    Text("\(Int(coreUsage.usage * 100))%")
+                }
+                .frame(maxWidth: .infinity, alignment: .leading)
+            }
+
+            Spacer()
         }
-        .padding()
-        .onAppear {
-        }
+        .padding(.leading, 20)
+        .padding(.top, 20)
     }
 }
 

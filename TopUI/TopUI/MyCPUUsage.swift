@@ -4,37 +4,50 @@
 //
 //  Created by Ghislain Leblanc on 2023-10-24.
 //
+// From: https://github.com/mattgallagher/CwlUtils/blob/master/Sources/CwlUtils/CwlSysctl.swift
 
+import Combine
 import Foundation
 
 class MyCPUUsage {
-    var cpuInfo: processor_info_array_t!
-    var prevCpuInfo: processor_info_array_t?
-    var numCpuInfo: mach_msg_type_number_t = 0
-    var numPrevCpuInfo: mach_msg_type_number_t = 0
-    var numCPUs: uint = 0
-    var updateTimer: Timer!
-    let CPUUsageLock: NSLock = NSLock()
+    let coreUsagesPublisher = PassthroughSubject<[CoreUsage], Never>()
+
+    private var cpuInfo: processor_info_array_t?
+    private var prevCpuInfo: processor_info_array_t?
+    private var numCpuInfo: mach_msg_type_number_t = 0
+    private var numPrevCpuInfo: mach_msg_type_number_t = 0
+    private var numCPUs: uint = 0
+    private var updateTimer: Timer?
+    private let CPUUsageLock: NSLock = NSLock()
 
     init() {
-        let mibKeys: [Int32] = [ CTL_HW, HW_NCPU ]
-        // sysctl Swift usage credit Matt Gallagher: https://github.com/mattgallagher/CwlUtils/blob/master/Sources/CwlUtils/CwlSysctl.swift
+        let mibKeys = [CTL_HW, HW_NCPU]
+
         mibKeys.withUnsafeBufferPointer { mib in
             var sizeOfNumCPUs: size_t = MemoryLayout<uint>.size
             let status = sysctl(processor_info_array_t(mutating: mib.baseAddress), 2, &numCPUs, &sizeOfNumCPUs, nil, 0)
             if status != 0 {
                 numCPUs = 1
             }
-            updateTimer = Timer.scheduledTimer(
-                timeInterval: 3,
-                target: self,
-                selector: #selector(updateInfo),
-                userInfo: nil,
-                repeats: true
-            )
         }
     }
 
+    func startMonitoring() {
+        self.updateTimer = Timer.scheduledTimer(
+            timeInterval: 0.5,
+            target: self,
+            selector: #selector(updateInfo),
+            userInfo: nil,
+            repeats: true
+        )
+    }
+
+    func stopMonitoring() {
+        self.updateTimer?.invalidate()
+    }
+}
+
+private extension MyCPUUsage {
     @objc func updateInfo(_ timer: Timer) {
         var numCPUsU: natural_t = 0
         let err: kern_return_t = host_processor_info(
@@ -45,45 +58,58 @@ class MyCPUUsage {
             &numCpuInfo
         )
 
-        if err == KERN_SUCCESS {
-            CPUUsageLock.lock()
+        guard err == KERN_SUCCESS else {
+            print("Error getting CPU Usage")
+            return
+        }
 
-            for ctr in 0 ..< Int32(numCPUs) {
-                var inUse: Int32
-                var total: Int32
-                if let prevCpuInfo = prevCpuInfo {
-                    inUse = cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_USER)]
-                        - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_USER)]
-                        + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_SYSTEM)]
-                        - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_SYSTEM)]
-                        + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_NICE)]
-                        - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_NICE)]
-                    total = inUse + (cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)]
-                                        - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)])
-                } else {
-                    inUse = cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_USER)]
-                        + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_SYSTEM)]
-                        + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_NICE)]
-                    total = inUse + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)]
-                }
+        CPUUsageLock.lock()
 
-                print(String(format: "Core: %u Usage: %f", ctr, Float(inUse) / Float(total)))
+        var coreUsages = [CoreUsage]()
+        coreUsages.reserveCapacity(Int(numCPUs))
+
+        for ctr in 0 ..< Int32(numCPUs) {
+            guard let cpuInfo else {
+                print("Error getting CPU Usage")
+                return
             }
-            CPUUsageLock.unlock()
+
+            var inUse: Int32
+            var total: Int32
 
             if let prevCpuInfo = prevCpuInfo {
-                // vm_deallocate Swift usage credit rsfinn: https://stackoverflow.com/a/48630296/1033581
-                let prevCpuInfoSize: size_t = MemoryLayout<integer_t>.stride * Int(numPrevCpuInfo)
-                vm_deallocate(mach_task_self_, vm_address_t(bitPattern: prevCpuInfo), vm_size_t(prevCpuInfoSize))
+                inUse = cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_USER)]
+                    - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_USER)]
+                    + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_SYSTEM)]
+                    - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_SYSTEM)]
+                    + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_NICE)]
+                    - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_NICE)]
+                total = inUse + (cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)]
+                                    - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)])
+            } else {
+                inUse = cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_USER)]
+                    + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_SYSTEM)]
+                    + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_NICE)]
+                total = inUse + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)]
             }
 
-            prevCpuInfo = cpuInfo
-            numPrevCpuInfo = numCpuInfo
-
-            cpuInfo = nil
-            numCpuInfo = 0
-        } else {
-            print("Error!")
+            coreUsages.append(.init(id: Int(ctr + 1), usage: Float(inUse) / Float(total)))
         }
+
+        CPUUsageLock.unlock()
+
+        self.coreUsagesPublisher.send(coreUsages)
+
+        if let prevCpuInfo = prevCpuInfo {
+            // vm_deallocate Swift usage credit rsfinn: https://stackoverflow.com/a/48630296/1033581
+            let prevCpuInfoSize: size_t = MemoryLayout<integer_t>.stride * Int(numPrevCpuInfo)
+            vm_deallocate(mach_task_self_, vm_address_t(bitPattern: prevCpuInfo), vm_size_t(prevCpuInfoSize))
+        }
+
+        prevCpuInfo = cpuInfo
+        numPrevCpuInfo = numCpuInfo
+
+        cpuInfo = nil
+        numCpuInfo = 0
     }
 }

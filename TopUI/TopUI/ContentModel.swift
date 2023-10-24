@@ -5,13 +5,21 @@
 //  Created by Ghislain Leblanc on 2023-10-24.
 //
 
+import Combine
 import Foundation
 
 @MainActor
 class ContentModel: ObservableObject {
-    private let myCPUUsage = MyCPUUsage()
+    @Published var coreUsages = [CoreUsage]()
 
-    var cpuInfo: processor_info_array_t {
-        self.myCPUUsage.cpuInfo
+    private let myCPUUsage = MyCPUUsage()
+    private var cancellable: AnyCancellable?
+
+    init() {
+        cancellable = myCPUUsage.coreUsagesPublisher.sink(receiveValue: { [weak self] coreUsages in
+            self?.coreUsages = coreUsages
+        })
+
+        myCPUUsage.startMonitoring()
     }
 }
