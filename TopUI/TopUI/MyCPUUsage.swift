@@ -67,10 +67,7 @@ private extension MyCPUUsage {
             &numCpuInfo
         )
 
-        guard err == KERN_SUCCESS else {
-            print("Error getting CPU Usage")
-            return
-        }
+        guard err == KERN_SUCCESS else { return }
 
         CPUUsageLock.lock()
 
@@ -78,10 +75,7 @@ private extension MyCPUUsage {
         coreUsages.reserveCapacity(numCPUs)
 
         for ctr in 0..<Int32(numCPUs) {
-            guard let cpuInfo else {
-                print("Error getting CPU Usage")
-                return
-            }
+            guard let cpuInfo else { return }
 
             var inUse: Int32
             var total: Int32
@@ -108,7 +102,7 @@ private extension MyCPUUsage {
 
         CPUUsageLock.unlock()
 
-        self.coreUsagesPublisher.send(coreUsages)
+        coreUsagesPublisher.send(coreUsages)
 
         if let prevCpuInfo = prevCpuInfo {
             // vm_deallocate Swift usage credit rsfinn: https://stackoverflow.com/a/48630296/1033581
