@@ -12,6 +12,8 @@ struct TopUIApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
+                .frame(width: 350, height: 300)
         }
+        .windowResizability(.contentSize)
     }
 }
