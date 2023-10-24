@@ -12,6 +12,7 @@
 		85427C7B2AE7FA3600846D1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85427C7A2AE7FA3600846D1A /* Assets.xcassets */; };
 		85427C7E2AE7FA3600846D1A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85427C7D2AE7FA3600846D1A /* Preview Assets.xcassets */; };
 		85427C862AE7FCA200846D1A /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C852AE7FCA200846D1A /* ContentModel.swift */; };
+		85427C882AE8119D00846D1A /* MyCPUUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C872AE8119D00846D1A /* MyCPUUsage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		85427C7D2AE7FA3600846D1A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		85427C7F2AE7FA3600846D1A /* TopUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TopUI.entitlements; sourceTree = "<group>"; };
 		85427C852AE7FCA200846D1A /* ContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
+		85427C872AE8119D00846D1A /* MyCPUUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCPUUsage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -60,6 +62,7 @@
 				85427C762AE7FA3500846D1A /* TopUIApp.swift */,
 				85427C7A2AE7FA3600846D1A /* Assets.xcassets */,
 				85427C7C2AE7FA3600846D1A /* Preview Content */,
+				85427C872AE8119D00846D1A /* MyCPUUsage.swift */,
 			);
 			path = TopUI;
 			sourceTree = "<group>";
@@ -80,6 +83,7 @@
 			buildConfigurationList = 85427C822AE7FA3600846D1A /* Build configuration list for PBXNativeTarget "TopUI" */;
 			buildPhases = (
 				85427C6F2AE7FA3500846D1A /* Sources */,
+				85427C892AE812DF00846D1A /* SwiftLint */,
 				85427C702AE7FA3500846D1A /* Frameworks */,
 				85427C712AE7FA3500846D1A /* Resources */,
 			);
@@ -137,6 +141,29 @@
 		};
 /* End PBXResourcesBuildPhase section */
 
+/* Begin PBXShellScriptBuildPhase section */
+		85427C892AE812DF00846D1A /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+				"$(SRCROOT)/TopUI",
+			);
+			name = SwiftLint;
+			outputFileListPaths = (
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n    swiftlint --fix --format\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
+
 /* Begin PBXSourcesBuildPhase section */
 		85427C6F2AE7FA3500846D1A /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
@@ -144,6 +171,7 @@
 			files = (
 				85427C792AE7FA3500846D1A /* ContentView.swift in Sources */,
 				85427C772AE7FA3500846D1A /* TopUIApp.swift in Sources */,
+				85427C882AE8119D00846D1A /* MyCPUUsage.swift in Sources */,
 				85427C862AE7FCA200846D1A /* ContentModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

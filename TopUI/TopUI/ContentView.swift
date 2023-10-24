@@ -19,9 +19,6 @@ struct ContentView: View {
         }
         .padding()
         .onAppear {
-            if let topOutput = model.runTopCommand() {
-                model.parseTopOutput(topOutput)
-            }
         }
     }
 }
