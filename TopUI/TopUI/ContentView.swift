@@ -13,12 +13,8 @@ struct ContentView: View {
     var body: some View {
         VStack {
             ForEach(model.coreUsages) { coreUsage in
-                HStack(spacing: 10) {
-                    Text("Core: \(coreUsage.id)")
-
-                    Text("\(Int(coreUsage.usage * 100))%")
-                }
-                .frame(maxWidth: .infinity, alignment: .leading)
+                Text("Core \(coreUsage.id) \(Int(coreUsage.usage * 100))%")
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             Spacer()

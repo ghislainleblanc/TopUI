@@ -16,9 +16,9 @@ class MyCPUUsage {
     private var prevCpuInfo: processor_info_array_t?
     private var numCpuInfo: mach_msg_type_number_t = 0
     private var numPrevCpuInfo: mach_msg_type_number_t = 0
-    private var numCPUs: uint = 0
+    private var numCPUs = 0
     private var updateTimer: Timer?
-    private let CPUUsageLock: NSLock = NSLock()
+    private let CPUUsageLock = NSLock()
 
     init() {
         let mibKeys = [CTL_HW, HW_NCPU]
@@ -33,7 +33,7 @@ class MyCPUUsage {
     }
 
     func startMonitoring() {
-        self.updateTimer = Timer.scheduledTimer(
+        updateTimer = Timer.scheduledTimer(
             timeInterval: 0.5,
             target: self,
             selector: #selector(updateInfo),
@@ -43,14 +43,15 @@ class MyCPUUsage {
     }
 
     func stopMonitoring() {
-        self.updateTimer?.invalidate()
+        updateTimer?.invalidate()
     }
 }
 
 private extension MyCPUUsage {
-    @objc func updateInfo(_ timer: Timer) {
+    @objc
+    func updateInfo(_ timer: Timer) {
         var numCPUsU: natural_t = 0
-        let err: kern_return_t = host_processor_info(
+        let err = host_processor_info(
             mach_host_self(),
             PROCESSOR_CPU_LOAD_INFO,
             &numCPUsU,
@@ -66,9 +67,9 @@ private extension MyCPUUsage {
         CPUUsageLock.lock()
 
         var coreUsages = [CoreUsage]()
-        coreUsages.reserveCapacity(Int(numCPUs))
+        coreUsages.reserveCapacity(numCPUs)
 
-        for ctr in 0 ..< Int32(numCPUs) {
+        for ctr in 0..<Int32(numCPUs) {
             guard let cpuInfo else {
                 print("Error getting CPU Usage")
                 return
