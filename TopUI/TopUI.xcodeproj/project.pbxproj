@@ -11,6 +11,7 @@
 		85427C792AE7FA3500846D1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C782AE7FA3500846D1A /* ContentView.swift */; };
 		85427C7B2AE7FA3600846D1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85427C7A2AE7FA3600846D1A /* Assets.xcassets */; };
 		85427C7E2AE7FA3600846D1A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85427C7D2AE7FA3600846D1A /* Preview Assets.xcassets */; };
+		85427C862AE7FCA200846D1A /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C852AE7FCA200846D1A /* ContentModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		85427C7A2AE7FA3600846D1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85427C7D2AE7FA3600846D1A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		85427C7F2AE7FA3600846D1A /* TopUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TopUI.entitlements; sourceTree = "<group>"; };
+		85427C852AE7FCA200846D1A /* ContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -52,10 +54,11 @@
 		85427C752AE7FA3500846D1A /* TopUI */ = {
 			isa = PBXGroup;
 			children = (
-				85427C762AE7FA3500846D1A /* TopUIApp.swift */,
-				85427C782AE7FA3500846D1A /* ContentView.swift */,
-				85427C7A2AE7FA3600846D1A /* Assets.xcassets */,
 				85427C7F2AE7FA3600846D1A /* TopUI.entitlements */,
+				85427C852AE7FCA200846D1A /* ContentModel.swift */,
+				85427C782AE7FA3500846D1A /* ContentView.swift */,
+				85427C762AE7FA3500846D1A /* TopUIApp.swift */,
+				85427C7A2AE7FA3600846D1A /* Assets.xcassets */,
 				85427C7C2AE7FA3600846D1A /* Preview Content */,
 			);
 			path = TopUI;
@@ -141,6 +144,7 @@
 			files = (
 				85427C792AE7FA3500846D1A /* ContentView.swift in Sources */,
 				85427C772AE7FA3500846D1A /* TopUIApp.swift in Sources */,
+				85427C862AE7FCA200846D1A /* ContentModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -271,6 +275,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TopUI/TopUI.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -279,6 +284,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -298,6 +304,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = TopUI/TopUI.entitlements;
+				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
 				CURRENT_PROJECT_VERSION = 1;
@@ -306,6 +313,7 @@
 				ENABLE_HARDENED_RUNTIME = YES;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_LSApplicationCategoryType = "public.app-category.utilities";
 				INFOPLIST_KEY_NSHumanReadableCopyright = "";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
