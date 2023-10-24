@@ -24,8 +24,16 @@ class MyCPUUsage {
         let mibKeys = [CTL_HW, HW_NCPU]
 
         mibKeys.withUnsafeBufferPointer { mib in
-            var sizeOfNumCPUs: size_t = MemoryLayout<uint>.size
-            let status = sysctl(processor_info_array_t(mutating: mib.baseAddress), 2, &numCPUs, &sizeOfNumCPUs, nil, 0)
+            var sizeOfNumCPUs = MemoryLayout<uint>.size
+            let status = sysctl(
+                processor_info_array_t(mutating: mib.baseAddress),
+                2,
+                &numCPUs,
+                &sizeOfNumCPUs,
+                nil,
+                0
+            )
+
             if status != 0 {
                 numCPUs = 1
             }
@@ -85,8 +93,9 @@ private extension MyCPUUsage {
                     - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_SYSTEM)]
                     + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_NICE)]
                     - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_NICE)]
-                total = inUse + (cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)]
-                                    - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)])
+                total = inUse
+                    + (cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)]
+                        - prevCpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)])
             } else {
                 inUse = cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_USER)]
                     + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_SYSTEM)]
