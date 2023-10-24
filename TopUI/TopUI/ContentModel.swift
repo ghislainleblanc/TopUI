@@ -8,7 +8,6 @@
 import Combine
 import Foundation
 
-@MainActor
 class ContentModel: ObservableObject {
     @Published var coreUsages = [CoreUsage]()
 
