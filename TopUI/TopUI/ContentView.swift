@@ -14,7 +14,7 @@ struct ContentView: View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
                 ForEach(model.coreUsages) { coreUsage in
-                    Text("Core \(coreUsage.id) \(Int(coreUsage.usage * 100))%")
+                    Text("Core \(coreUsage.id): \(Int(coreUsage.usage * 100))%")
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
             }

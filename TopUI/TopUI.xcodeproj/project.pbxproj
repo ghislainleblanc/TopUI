@@ -65,13 +65,13 @@
 				85427C7F2AE7FA3600846D1A /* TopUI.entitlements */,
 				85427C852AE7FCA200846D1A /* ContentModel.swift */,
 				85427C782AE7FA3500846D1A /* ContentView.swift */,
+				853712AC2AE820E700292128 /* CoreUsage.swift */,
+				856CD7B12AE8905A00E6097C /* MemoryUsage.swift */,
+				85427C872AE8119D00846D1A /* MySystemStats.swift */,
+				850786B72AE88E5F00CC04D5 /* System.swift */,
 				85427C762AE7FA3500846D1A /* TopUIApp.swift */,
 				85427C7A2AE7FA3600846D1A /* Assets.xcassets */,
 				85427C7C2AE7FA3600846D1A /* Preview Content */,
-				85427C872AE8119D00846D1A /* MySystemStats.swift */,
-				850786B72AE88E5F00CC04D5 /* System.swift */,
-				853712AC2AE820E700292128 /* CoreUsage.swift */,
-				856CD7B12AE8905A00E6097C /* MemoryUsage.swift */,
 			);
 			path = TopUI;
 			sourceTree = "<group>";
