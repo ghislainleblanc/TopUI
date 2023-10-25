@@ -13,4 +13,8 @@ struct MemoryUsage {
     let inactive: Double
     let wired: Double
     let compressed: Double
+
+    func totalMemory() -> Double {
+        free + active + inactive + wired + compressed
+    }
 }

@@ -35,6 +35,9 @@ struct ContentView: View {
 
                 Text("Compressed Memory: \(String(format: "%.2f", model.memoryUsage.compressed))Gb")
                     .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text("Total Memory: \(String(format: "%.2f", model.memoryUsage.totalMemory()))Gb")
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
 
             Spacer()
