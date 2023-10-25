@@ -10,23 +10,23 @@ import Foundation
 
 class ContentModel: ObservableObject {
     @Published var coreUsages = [CoreUsage]()
-    @Published var memoryUsage: MemoryUsage?
+    @Published var memoryUsage = MemoryUsage(free: 0, active: 0, inactive: 0, wired: 0, compressed: 0)
 
-    private let myCPUUsage = MyCPUUsage()
+    private let mySystemStats = MySystemStats()
 
     private var cancellables = [AnyCancellable]()
 
     init() {
-        myCPUUsage.coreUsagesPublisher.sink(receiveValue: { [weak self] coreUsages in
+        mySystemStats.coreUsagesPublisher.sink(receiveValue: { [weak self] coreUsages in
             self?.coreUsages = coreUsages
         })
         .store(in: &cancellables)
 
-        myCPUUsage.memoryUsagePublisher.sink(receiveValue: { [weak self] memoryUsage in
+        mySystemStats.memoryUsagePublisher.sink(receiveValue: { [weak self] memoryUsage in
             self?.memoryUsage = memoryUsage
         })
         .store(in: &cancellables)
 
-        myCPUUsage.startMonitoring()
+        mySystemStats.startMonitoring()
     }
 }

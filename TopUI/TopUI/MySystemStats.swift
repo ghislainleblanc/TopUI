@@ -1,5 +1,5 @@
 //
-//  MyCPUUsage.swift
+//  MySystemStats.swift
 //  TopUI
 //
 //  Created by Ghislain Leblanc on 2023-10-24.
@@ -9,7 +9,7 @@
 import Combine
 import Foundation
 
-class MyCPUUsage {
+class MySystemStats {
     let coreUsagesPublisher = PassthroughSubject<[CoreUsage], Never>()
     let memoryUsagePublisher = PassthroughSubject<MemoryUsage, Never>()
 
@@ -22,9 +22,7 @@ class MyCPUUsage {
     private let CPUUsageLock = NSLock()
 
     init() {
-        let mibKeys = [CTL_HW, HW_NCPU]
-
-        mibKeys.withUnsafeBufferPointer { mib in
+        [CTL_HW, HW_NCPU].withUnsafeBufferPointer { mib in
             var sizeOfNumCPUs = MemoryLayout<uint>.size
             let status = sysctl(
                 processor_info_array_t(mutating: mib.baseAddress),
@@ -56,7 +54,7 @@ class MyCPUUsage {
     }
 }
 
-private extension MyCPUUsage {
+private extension MySystemStats {
     @objc
     func updateInfo(_ timer: Timer) { // swiftlint:disable:this function_body_length
         let systemMemoryUsage = System.memoryUsage()
