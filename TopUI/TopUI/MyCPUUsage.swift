@@ -11,6 +11,7 @@ import Foundation
 
 class MyCPUUsage {
     let coreUsagesPublisher = PassthroughSubject<[CoreUsage], Never>()
+    let memoryUsagePublisher = PassthroughSubject<MemoryUsage, Never>()
 
     private var cpuInfo: processor_info_array_t?
     private var prevCpuInfo: processor_info_array_t?
@@ -57,7 +58,17 @@ class MyCPUUsage {
 
 private extension MyCPUUsage {
     @objc
-    func updateInfo(_ timer: Timer) {
+    func updateInfo(_ timer: Timer) { // swiftlint:disable:this function_body_length
+        let systemMemoryUsage = System.memoryUsage()
+        let memoryUsage = MemoryUsage(
+            free: systemMemoryUsage.free,
+            active: systemMemoryUsage.active,
+            inactive: systemMemoryUsage.inactive,
+            wired: systemMemoryUsage.wired,
+            compressed: systemMemoryUsage.compressed
+        )
+        memoryUsagePublisher.send(memoryUsage)
+
         var numCPUsU: natural_t = 0
         let err = host_processor_info(
             mach_host_self(),

@@ -10,14 +10,22 @@ import Foundation
 
 class ContentModel: ObservableObject {
     @Published var coreUsages = [CoreUsage]()
+    @Published var memoryUsage: MemoryUsage?
 
     private let myCPUUsage = MyCPUUsage()
-    private var cancellable: AnyCancellable?
+
+    private var cancellables = [AnyCancellable]()
 
     init() {
-        cancellable = myCPUUsage.coreUsagesPublisher.sink(receiveValue: { [weak self] coreUsages in
+        myCPUUsage.coreUsagesPublisher.sink(receiveValue: { [weak self] coreUsages in
             self?.coreUsages = coreUsages
         })
+        .store(in: &cancellables)
+
+        myCPUUsage.memoryUsagePublisher.sink(receiveValue: { [weak self] memoryUsage in
+            self?.memoryUsage = memoryUsage
+        })
+        .store(in: &cancellables)
 
         myCPUUsage.startMonitoring()
     }

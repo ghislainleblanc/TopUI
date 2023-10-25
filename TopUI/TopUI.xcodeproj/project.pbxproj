@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		850786B82AE88E5F00CC04D5 /* System.swift in Sources */ = {isa = PBXBuildFile; fileRef = 850786B72AE88E5F00CC04D5 /* System.swift */; };
 		853712AD2AE820E700292128 /* CoreUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 853712AC2AE820E700292128 /* CoreUsage.swift */; };
 		85427C772AE7FA3500846D1A /* TopUIApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C762AE7FA3500846D1A /* TopUIApp.swift */; };
 		85427C792AE7FA3500846D1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C782AE7FA3500846D1A /* ContentView.swift */; };
@@ -14,9 +15,11 @@
 		85427C7E2AE7FA3600846D1A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85427C7D2AE7FA3600846D1A /* Preview Assets.xcassets */; };
 		85427C862AE7FCA200846D1A /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C852AE7FCA200846D1A /* ContentModel.swift */; };
 		85427C882AE8119D00846D1A /* MyCPUUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C872AE8119D00846D1A /* MyCPUUsage.swift */; };
+		856CD7B22AE8905A00E6097C /* MemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856CD7B12AE8905A00E6097C /* MemoryUsage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		850786B72AE88E5F00CC04D5 /* System.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = System.swift; sourceTree = "<group>"; };
 		853712AC2AE820E700292128 /* CoreUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreUsage.swift; sourceTree = "<group>"; };
 		85427C732AE7FA3500846D1A /* TopUI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = TopUI.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		85427C762AE7FA3500846D1A /* TopUIApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopUIApp.swift; sourceTree = "<group>"; };
@@ -26,6 +29,7 @@
 		85427C7F2AE7FA3600846D1A /* TopUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TopUI.entitlements; sourceTree = "<group>"; };
 		85427C852AE7FCA200846D1A /* ContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
 		85427C872AE8119D00846D1A /* MyCPUUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyCPUUsage.swift; sourceTree = "<group>"; };
+		856CD7B12AE8905A00E6097C /* MemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUsage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,7 +69,9 @@
 				85427C7A2AE7FA3600846D1A /* Assets.xcassets */,
 				85427C7C2AE7FA3600846D1A /* Preview Content */,
 				85427C872AE8119D00846D1A /* MyCPUUsage.swift */,
+				850786B72AE88E5F00CC04D5 /* System.swift */,
 				853712AC2AE820E700292128 /* CoreUsage.swift */,
+				856CD7B12AE8905A00E6097C /* MemoryUsage.swift */,
 			);
 			path = TopUI;
 			sourceTree = "<group>";
@@ -176,6 +182,8 @@
 				85427C772AE7FA3500846D1A /* TopUIApp.swift in Sources */,
 				85427C882AE8119D00846D1A /* MyCPUUsage.swift in Sources */,
 				85427C862AE7FCA200846D1A /* ContentModel.swift in Sources */,
+				856CD7B22AE8905A00E6097C /* MemoryUsage.swift in Sources */,
+				850786B82AE88E5F00CC04D5 /* System.swift in Sources */,
 				853712AD2AE820E700292128 /* CoreUsage.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
