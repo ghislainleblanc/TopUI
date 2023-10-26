@@ -13,6 +13,11 @@ struct TopUIApp: App {
         WindowGroup {
             ContentView()
                 .frame(width: 350, height: 350)
+                .onAppear {
+                    for window in NSApplication.shared.windows {
+                        window.level = .floating
+                    }
+                }
         }
         .windowResizability(.contentSize)
     }
