@@ -56,7 +56,12 @@ class MySystemStats {
 
 private extension MySystemStats {
     @objc
-    func updateInfo(_ timer: Timer) { // swiftlint:disable:this function_body_length
+    func updateInfo() {
+        getMemoryUsage()
+        getCPUUsage()
+    }
+
+    func getMemoryUsage() {
         let systemMemoryUsage = System.memoryUsage()
         let memoryUsage = MemoryUsage(
             free: systemMemoryUsage.free,
@@ -65,8 +70,11 @@ private extension MySystemStats {
             wired: systemMemoryUsage.wired,
             compressed: systemMemoryUsage.compressed
         )
-        memoryUsagePublisher.send(memoryUsage)
 
+        memoryUsagePublisher.send(memoryUsage)
+    }
+
+    func getCPUUsage() {
         var numCPUsU: natural_t = 0
         let err = host_processor_info(
             mach_host_self(),
@@ -111,8 +119,6 @@ private extension MySystemStats {
 
         CPUUsageLock.unlock()
 
-        coreUsagesPublisher.send(coreUsages)
-
         if let prevCpuInfo = prevCpuInfo {
             // vm_deallocate Swift usage credit rsfinn: https://stackoverflow.com/a/48630296/1033581
             let prevCpuInfoSize: size_t = MemoryLayout<integer_t>.stride * Int(numPrevCpuInfo)
@@ -124,5 +130,7 @@ private extension MySystemStats {
 
         cpuInfo = nil
         numCpuInfo = 0
+
+        coreUsagesPublisher.send(coreUsages)
     }
 }
