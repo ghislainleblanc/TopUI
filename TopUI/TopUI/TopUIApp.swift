@@ -12,7 +12,7 @@ struct TopUIApp: App {
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .frame(width: 350, height: 350)
+                .frame(width: 350, height: 380)
                 .onAppear {
                     for window in NSApplication.shared.windows {
                         window.level = .floating

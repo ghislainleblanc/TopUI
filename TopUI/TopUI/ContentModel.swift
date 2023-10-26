@@ -11,6 +11,7 @@ import Foundation
 class ContentModel: ObservableObject {
     @Published var coreUsages = [CoreUsage]()
     @Published var memoryUsage = MemoryUsage(free: 0, active: 0, inactive: 0, wired: 0, compressed: 0)
+    @Published var GPUUsage = 0
 
     private let mySystemStats = MySystemStats()
 
@@ -24,6 +25,11 @@ class ContentModel: ObservableObject {
 
         mySystemStats.memoryUsagePublisher.sink(receiveValue: { [weak self] memoryUsage in
             self?.memoryUsage = memoryUsage
+        })
+        .store(in: &cancellables)
+
+        mySystemStats.GPUUsagePublisher.sink(receiveValue: { [weak self] GPUUsage in
+            self?.GPUUsage = GPUUsage
         })
         .store(in: &cancellables)
 

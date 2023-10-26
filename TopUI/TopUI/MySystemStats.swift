@@ -28,6 +28,11 @@ class MySystemStats {
         memoryUsageSubject.eraseToAnyPublisher()
     }
 
+    private let GPUUsageSubject = CurrentValueSubject<Int, Never>(0)
+    var GPUUsagePublisher: AnyPublisher<Int, Never> {
+        GPUUsageSubject.eraseToAnyPublisher()
+    }
+
     private var cpuInfo: processor_info_array_t?
     private var prevCpuInfo: processor_info_array_t?
     private var numCpuInfo: mach_msg_type_number_t = 0
@@ -74,6 +79,7 @@ private extension MySystemStats {
     func updateInfo() {
         getMemoryUsage()
         getCPUUsage()
+        getGPUUsage()
     }
 
     func getMemoryUsage() {
@@ -147,5 +153,57 @@ private extension MySystemStats {
         numCpuInfo = 0
 
         coreUsagesSubject.send(coreUsages)
+    }
+
+    func getGPUUsage() {
+        var accelerators = [[String: AnyObject]]()
+        var iterator = io_iterator_t()
+
+        if IOServiceGetMatchingServices(
+            kIOMainPortDefault,
+            IOServiceMatching(kIOAcceleratorClassName),
+            &iterator
+        ) == kIOReturnSuccess {
+            repeat {
+                let entry = IOIteratorNext(iterator)
+                defer {
+                    IOObjectRelease(entry)
+                }
+                guard entry != 0 else {
+                    break
+                }
+                var serviceDict: Unmanaged<CFMutableDictionary>?
+
+                guard IORegistryEntryCreateCFProperties(
+                    entry, &serviceDict,
+                    kCFAllocatorDefault,
+                    0
+                ) == kIOReturnSuccess else {
+                    break
+                }
+                if let serviceDict = serviceDict {
+                    accelerators.append(
+                        Dictionary(
+                            uniqueKeysWithValues: (serviceDict.takeRetainedValue() as NSDictionary as Dictionary).map {
+                                ($0 as! String, $1) // swiftlint:disable:this force_cast
+                            }
+                        )
+                    )
+                }
+            } while true
+
+            IOObjectRelease(iterator)
+
+            if let statistics = accelerators.first?["PerformanceStatistics"] {
+                let utilizationCandidates: [Int?] = [
+                    (statistics["Device Utilization %"] as? NSNumber)?.intValue,
+                    (statistics["hardwareWaitTime"] as? NSNumber).map {
+                        max(min($0.intValue / 1000 / 1000 / 10, 100), 0)
+                    }
+                ]
+
+                GPUUsageSubject.send(utilizationCandidates.reduce(nil, { $0 ?? $1 }) ?? 0)
+            }
+        }
     }
 }

@@ -39,6 +39,12 @@ struct ContentView: View {
                 Text("Total Memory: \(String(format: "%.2f", model.memoryUsage.totalMemory()))Gb")
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
+            .padding(.bottom, 20)
+
+            VStack(spacing: 0) {
+                Text("GPU Usage: \(model.GPUUsage)%")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+            }
 
             Spacer()
         }
