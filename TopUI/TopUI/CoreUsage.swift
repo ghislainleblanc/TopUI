@@ -8,6 +8,6 @@
 import Foundation
 
 struct CoreUsage: Identifiable {
-    let id: Int
+    let id: Int32
     let usage: Float
 }

@@ -10,8 +10,23 @@ import Combine
 import Foundation
 
 class MySystemStats {
-    let coreUsagesPublisher = PassthroughSubject<[CoreUsage], Never>()
-    let memoryUsagePublisher = PassthroughSubject<MemoryUsage, Never>()
+    private let coreUsagesSubject = CurrentValueSubject<[CoreUsage], Never>([])
+    var coreUsagesPublisher: AnyPublisher<[CoreUsage], Never> {
+        coreUsagesSubject.eraseToAnyPublisher()
+    }
+
+    private let memoryUsageSubject = CurrentValueSubject<MemoryUsage, Never>(
+        .init(
+            free: 0,
+            active: 0,
+            inactive: 0,
+            wired: 0,
+            compressed: 0
+        )
+    )
+    var memoryUsagePublisher: AnyPublisher<MemoryUsage, Never> {
+        memoryUsageSubject.eraseToAnyPublisher()
+    }
 
     private var cpuInfo: processor_info_array_t?
     private var prevCpuInfo: processor_info_array_t?
@@ -71,7 +86,7 @@ private extension MySystemStats {
             compressed: systemMemoryUsage.compressed
         )
 
-        memoryUsagePublisher.send(memoryUsage)
+        memoryUsageSubject.send(memoryUsage)
     }
 
     func getCPUUsage() {
@@ -114,7 +129,7 @@ private extension MySystemStats {
                 total = inUse + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)]
             }
 
-            coreUsages.append(.init(id: Int(ctr + 1), usage: Float(inUse) / Float(total)))
+            coreUsages.append(.init(id: ctr + 1, usage: Float(inUse) / Float(total)))
         }
 
         CPUUsageLock.unlock()
@@ -131,6 +146,6 @@ private extension MySystemStats {
         cpuInfo = nil
         numCpuInfo = 0
 
-        coreUsagesPublisher.send(coreUsages)
+        coreUsagesSubject.send(coreUsages)
     }
 }
