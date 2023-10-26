@@ -13,7 +13,7 @@ struct ContentView: View {
     var body: some View {
         VStack(spacing: 0) {
             VStack(spacing: 0) {
-                ForEach(model.coreUsages) { coreUsage in
+                ForEach(model.cpuUsage) { coreUsage in
                     Text("Core \(coreUsage.id): \(Int(coreUsage.usage * 100))%")
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -42,7 +42,7 @@ struct ContentView: View {
             .padding(.bottom, 20)
 
             VStack(spacing: 0) {
-                Text("GPU Usage: \(model.GPUUsage)%")
+                Text("GPU Usage: \(model.gpuUsage)%")
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
 

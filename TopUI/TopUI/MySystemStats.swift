@@ -10,9 +10,9 @@ import Combine
 import Foundation
 
 class MySystemStats {
-    private let coreUsagesSubject = CurrentValueSubject<[CoreUsage], Never>([])
-    var coreUsagesPublisher: AnyPublisher<[CoreUsage], Never> {
-        coreUsagesSubject.eraseToAnyPublisher()
+    private let cpuUsageSubject = CurrentValueSubject<[CoreUsage], Never>([])
+    var cpuUsagePublisher: AnyPublisher<[CoreUsage], Never> {
+        cpuUsageSubject.eraseToAnyPublisher()
     }
 
     private let memoryUsageSubject = CurrentValueSubject<MemoryUsage, Never>(
@@ -28,9 +28,9 @@ class MySystemStats {
         memoryUsageSubject.eraseToAnyPublisher()
     }
 
-    private let GPUUsageSubject = CurrentValueSubject<Int, Never>(0)
-    var GPUUsagePublisher: AnyPublisher<Int, Never> {
-        GPUUsageSubject.eraseToAnyPublisher()
+    private let gpuUsageSubject = CurrentValueSubject<Int, Never>(0)
+    var gpuUsagePublisher: AnyPublisher<Int, Never> {
+        gpuUsageSubject.eraseToAnyPublisher()
     }
 
     private var cpuInfo: processor_info_array_t?
@@ -152,7 +152,7 @@ private extension MySystemStats {
         cpuInfo = nil
         numCpuInfo = 0
 
-        coreUsagesSubject.send(coreUsages)
+        cpuUsageSubject.send(coreUsages)
     }
 
     func getGPUUsage() {
@@ -202,7 +202,7 @@ private extension MySystemStats {
                     }
                 ]
 
-                GPUUsageSubject.send(utilizationCandidates.reduce(nil, { $0 ?? $1 }) ?? 0)
+                gpuUsageSubject.send(utilizationCandidates.reduce(nil, { $0 ?? $1 }) ?? 0)
             }
         }
     }

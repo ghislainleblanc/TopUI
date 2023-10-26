@@ -9,17 +9,17 @@ import Combine
 import Foundation
 
 class ContentModel: ObservableObject {
-    @Published var coreUsages = [CoreUsage]()
+    @Published var cpuUsage = [CoreUsage]()
     @Published var memoryUsage = MemoryUsage(free: 0, active: 0, inactive: 0, wired: 0, compressed: 0)
-    @Published var GPUUsage = 0
+    @Published var gpuUsage = 0
 
     private let mySystemStats = MySystemStats()
 
     private var cancellables = [AnyCancellable]()
 
     init() {
-        mySystemStats.coreUsagesPublisher.sink(receiveValue: { [weak self] coreUsages in
-            self?.coreUsages = coreUsages
+        mySystemStats.cpuUsagePublisher.sink(receiveValue: { [weak self] cpuUsage in
+            self?.cpuUsage = cpuUsage
         })
         .store(in: &cancellables)
 
@@ -28,8 +28,8 @@ class ContentModel: ObservableObject {
         })
         .store(in: &cancellables)
 
-        mySystemStats.GPUUsagePublisher.sink(receiveValue: { [weak self] GPUUsage in
-            self?.GPUUsage = GPUUsage
+        mySystemStats.gpuUsagePublisher.sink(receiveValue: { [weak self] gpuUsage in
+            self?.gpuUsage = gpuUsage
         })
         .store(in: &cancellables)
 
