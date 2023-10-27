@@ -5,6 +5,7 @@
 //  Created by Ghislain Leblanc on 2023-10-24.
 //
 
+import Charts
 import SwiftUI
 
 struct ContentView: View {
@@ -12,10 +13,21 @@ struct ContentView: View {
 
     var body: some View {
         VStack(spacing: 0) {
-            VStack(spacing: 0) {
-                ForEach(model.cpuUsage) { coreUsage in
-                    Text("Core \(coreUsage.id): \(Int(coreUsage.usage * 100))%")
-                        .frame(maxWidth: .infinity, alignment: .leading)
+            HStack(spacing: 0) {
+                VStack(spacing: 0) {
+                    ForEach(model.cpuUsage) { coreUsage in
+                        Text("Core \(coreUsage.id): \(Int(coreUsage.usage * 100))%")
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                }
+
+                Chart {
+                    ForEach(model.cpuUsage) { coreUsage in
+                        BarMark(
+                            x: .value("Core", coreUsage.id),
+                            y: .value("Usage", Int(coreUsage.usage * 100))
+                        )
+                    }
                 }
             }
             .padding(.bottom, 20)
@@ -49,6 +61,7 @@ struct ContentView: View {
             Spacer()
         }
         .padding(.leading, 20)
+        .padding(.trailing, 20)
         .padding(.top, 20)
     }
 }
