@@ -61,20 +61,15 @@ struct ContentView: View {
 
             VStack(spacing: 0) {
                 Chart {
-                    //                    RuleMark(
-                    //                        xStart: .value("Start", 0),
-                    //                        xEnd: .value("End", Date().timeIntervalSince1970),
-                    //                        y: .value("Value", model.gpuUsage)
-                    //                    )
-
-                    PointMark(
-                        x: .value("X Value", Date().timeIntervalSince1970),
-                        y: .value("Y Value", model.gpuUsage)
+                    BarMark(
+                        x: .value("GPU", 0),
+                        y: .value("Usage", model.gpuUsage),
+                        width: 30
                     )
                 }
-                .frame(height: 60)
-                .padding(.bottom, 4)
+                .frame(maxWidth: .infinity)
                 .chartYScale(domain: 0...100)
+                .padding(.bottom, 6)
 
                 Text("GPU Usage: \(model.gpuUsage)%")
                     .frame(maxWidth: .infinity, alignment: .leading)
