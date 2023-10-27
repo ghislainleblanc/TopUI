@@ -77,8 +77,8 @@ class MySystemStats {
 private extension MySystemStats {
     @objc
     func updateInfo() {
-        getMemoryUsage()
         getCPUUsage()
+        getMemoryUsage()
         getGPUUsage()
     }
 
@@ -181,7 +181,7 @@ private extension MySystemStats {
                 ) == kIOReturnSuccess else {
                     break
                 }
-                if let serviceDict = serviceDict {
+                if let serviceDict {
                     accelerators.append(
                         Dictionary(
                             uniqueKeysWithValues: (serviceDict.takeRetainedValue() as NSDictionary as Dictionary).map {
@@ -195,7 +195,7 @@ private extension MySystemStats {
             IOObjectRelease(iterator)
 
             if let statistics = accelerators.first?["PerformanceStatistics"] {
-                let utilizationCandidates: [Int?] = [
+                let utilizationCandidates = [
                     (statistics["Device Utilization %"] as? NSNumber)?.intValue,
                     (statistics["hardwareWaitTime"] as? NSNumber).map {
                         max(min($0.intValue / 1000 / 1000 / 10, 100), 0)
