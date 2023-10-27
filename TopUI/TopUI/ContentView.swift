@@ -29,6 +29,11 @@ struct ContentView: View {
                         )
                     }
                 }
+                .frame(width: 230)
+                .chartXScale(domain: 1...13)
+                .chartXAxis {
+                    AxisMarks(values: .automatic(desiredCount: 12))
+                }
                 .chartYScale(domain: 0...100)
             }
             .padding(.bottom, 20)
