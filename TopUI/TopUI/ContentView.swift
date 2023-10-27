@@ -29,6 +29,7 @@ struct ContentView: View {
                         )
                     }
                 }
+                .chartYScale(domain: 0...100)
             }
             .padding(.bottom, 20)
 
