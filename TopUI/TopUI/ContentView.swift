@@ -72,7 +72,7 @@ struct ContentView: View {
                     BarMark(
                         x: .value("GPU", 0),
                         y: .value("Usage", model.gpuUsage),
-                        width: 60
+                        width: 80
                     )
                 }
                 .chartYScale(domain: 0...100)
