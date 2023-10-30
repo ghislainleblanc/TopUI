@@ -38,6 +38,10 @@ struct ContentView: View {
             }
             .padding(.bottom, 20)
 
+            Divider()
+                .padding(.bottom, 20)
+                .padding(.horizontal, 80)
+
             VStack(spacing: 0) {
                 Text("Free Memory: \(String(format: "%.2f", model.memoryUsage.free))Gb")
                     .frame(maxWidth: .infinity, alignment: .leading)
@@ -59,20 +63,24 @@ struct ContentView: View {
             }
             .padding(.bottom, 20)
 
+            Divider()
+                .padding(.bottom, 20)
+                .padding(.horizontal, 80)
+
             VStack(spacing: 0) {
                 Chart {
                     BarMark(
                         x: .value("GPU", 0),
                         y: .value("Usage", model.gpuUsage),
-                        width: 30
+                        width: 60
                     )
                 }
-                .frame(maxWidth: .infinity)
                 .chartYScale(domain: 0...100)
+                .frame(width: 140)
                 .padding(.bottom, 6)
 
                 Text("GPU Usage: \(model.gpuUsage)%")
-                    .frame(maxWidth: .infinity, alignment: .leading)
+                    .frame(maxWidth: .infinity, alignment: .center)
             }
 
             Spacer()
