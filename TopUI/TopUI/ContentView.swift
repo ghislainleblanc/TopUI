@@ -40,7 +40,7 @@ struct ContentView: View {
 
             Divider()
                 .padding(.bottom, 20)
-                .padding(.horizontal, 80)
+                .padding(.horizontal, 20)
 
             VStack(spacing: 0) {
                 Text("Free Memory: \(String(format: "%.2f", model.memoryUsage.free))Gb")
@@ -65,7 +65,7 @@ struct ContentView: View {
 
             Divider()
                 .padding(.bottom, 20)
-                .padding(.horizontal, 80)
+                .padding(.horizontal, 20)
 
             VStack(spacing: 0) {
                 Chart {
