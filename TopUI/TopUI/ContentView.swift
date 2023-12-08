@@ -30,7 +30,7 @@ struct ContentView: View {
                     }
                 }
                 .frame(width: CGFloat(model.cpuUsage.count * 20))
-                .chartXScale(domain: 1...model.cpuUsage.count + 1)
+                .chartXScale(domain: 0...model.cpuUsage.count + 1)
                 .chartXAxis {
                     AxisMarks(values: .automatic(desiredCount: model.cpuUsage.count)) { value in
                         AxisGridLine()
