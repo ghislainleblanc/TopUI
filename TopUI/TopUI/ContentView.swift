@@ -29,10 +29,10 @@ struct ContentView: View {
                         )
                     }
                 }
-                .frame(width: 230)
-                .chartXScale(domain: 1...13)
+                .frame(width: CGFloat(model.cpuUsage.count * 20))
+                .chartXScale(domain: 1...model.cpuUsage.count + 1)
                 .chartXAxis {
-                    AxisMarks(values: .automatic(desiredCount: 12))
+                    AxisMarks(values: .automatic(desiredCount: model.cpuUsage.count))
                 }
                 .chartYScale(domain: 0...100)
             }
