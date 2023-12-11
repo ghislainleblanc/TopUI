@@ -21,7 +21,8 @@ class MySystemStats {
             active: 0,
             inactive: 0,
             wired: 0,
-            compressed: 0
+            compressed: 0,
+            physical: 0
         )
     )
     var memoryUsagePublisher: AnyPublisher<MemoryUsage, Never> {
@@ -89,7 +90,8 @@ private extension MySystemStats {
             active: systemMemoryUsage.active,
             inactive: systemMemoryUsage.inactive,
             wired: systemMemoryUsage.wired,
-            compressed: systemMemoryUsage.compressed
+            compressed: systemMemoryUsage.compressed,
+            physical: System.physicalMemory()
         )
 
         memoryUsageSubject.send(memoryUsage)

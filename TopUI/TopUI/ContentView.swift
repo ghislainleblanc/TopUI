@@ -46,22 +46,25 @@ struct ContentView: View {
                 .padding(.horizontal, 20)
 
             VStack(spacing: 0) {
-                Text("Free Memory: \(String(format: "%.2f", model.memoryUsage.free))Gb")
+                Text("Free Memory: \(String(format: "%.2f", model.memoryUsage.free))GB")
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("Active Memory: \(String(format: "%.2f", model.memoryUsage.active))Gb")
+                Text("Active Memory: \(String(format: "%.2f", model.memoryUsage.active))GB")
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("Inactive Memory: \(String(format: "%.2f", model.memoryUsage.inactive))Gb")
+                Text("Inactive Memory: \(String(format: "%.2f", model.memoryUsage.inactive))GB")
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("Wired Memory: \(String(format: "%.2f", model.memoryUsage.wired))Gb")
+                Text("Wired Memory: \(String(format: "%.2f", model.memoryUsage.wired))GB")
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("Compressed Memory: \(String(format: "%.2f", model.memoryUsage.compressed))Gb")
+                Text("Compressed Memory: \(String(format: "%.2f", model.memoryUsage.compressed))GB")
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("Total Memory: \(String(format: "%.2f", model.memoryUsage.totalMemory()))Gb")
+                Text("Total Memory Used: \(String(format: "%.2f", model.memoryUsage.totalMemory()))GB")
+                    .frame(maxWidth: .infinity, alignment: .leading)
+
+                Text("Physical Memory: \(String(format: "%.2f", model.memoryUsage.physical))GB")
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
             .padding(.bottom, 20)
