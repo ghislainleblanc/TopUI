@@ -61,7 +61,7 @@ struct ContentView: View {
                 Text("Compressed Memory: \(String(format: "%.2f", model.memoryUsage.compressed))GB")
                     .frame(maxWidth: .infinity, alignment: .leading)
 
-                Text("Total Memory Allocated: \(String(format: "%.2f", model.memoryUsage.totalMemory()))GB")
+                Text("Total Allocated Memory: \(String(format: "%.2f", model.memoryUsage.totalMemory()))GB")
                     .frame(maxWidth: .infinity, alignment: .leading)
 
                 Text("Physical Memory: \(String(format: "%.2f", model.memoryUsage.physical))GB")
