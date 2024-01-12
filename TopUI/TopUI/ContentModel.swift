@@ -9,9 +9,16 @@ import Combine
 import Foundation
 
 class ContentModel: ObservableObject {
-    @Published var cpuUsage = [CoreUsage]()
-    @Published var memoryUsage = MemoryUsage(free: 0, active: 0, inactive: 0, wired: 0, compressed: 0, physical: 0)
-    @Published var gpuUsage = 0
+    @Published private(set) var cpuUsage = [CoreUsage]()
+    @Published private(set) var memoryUsage = MemoryUsage(
+        free: 0,
+        active: 0,
+        inactive: 0,
+        wired: 0,
+        compressed: 0,
+        physical: 0
+    )
+    @Published private(set) var gpuUsage = 0
 
     private let mySystemStats = MySystemStats()
 

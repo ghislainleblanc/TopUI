@@ -9,7 +9,7 @@
 import Combine
 import Foundation
 
-class MySystemStats {
+final class MySystemStats {
     private let cpuUsageSubject = CurrentValueSubject<[CoreUsage], Never>([])
     var cpuUsagePublisher: AnyPublisher<[CoreUsage], Never> {
         cpuUsageSubject.eraseToAnyPublisher()
