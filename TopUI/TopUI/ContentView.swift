@@ -78,28 +78,34 @@ struct ContentView: View {
                 .padding(.bottom, 20)
                 .padding(.horizontal, 20)
 
-            VStack(spacing: 0) {
-                Chart {
-                    BarMark(
-                        x: .value("GPU", 0),
-                        y: .value("Usage", model.gpuUsage),
-                        width: 80
-                    )
-                }
-                .chartYScale(domain: 0...100)
-                .frame(width: 140)
-                .padding(.bottom, 6)
+            HStack(spacing: 0) {
+                VStack(spacing: 0) {
+                    Chart {
+                        BarMark(
+                            x: .value("Usage", model.gpuUsage),
+                            width: 100
+                        )
+                    }
+                    .chartXScale(domain: 0...125)
+                    .frame(width: 130, alignment: .leading)
+                    .padding(.bottom, 6)
 
-                Text("GPU Usage: \(model.gpuUsage)%")
-                    .frame(maxWidth: .infinity, alignment: .center)
+                    Text("GPU Usage: \(model.gpuUsage)%")
+                        .frame(width: 130, alignment: .leading)
+                }
+
+                Spacer()
+
+                VStack(spacing: 0) {
+                    Spacer()
+
+                    Text("\(version) (\(bundle))")
+                        .font(.footnote)
+                        .frame(alignment: .trailing)
+                }
             }
 
             Spacer()
-
-            Text("\(version) (\(bundle))")
-                .font(.footnote)
-                .frame(maxWidth: .infinity, alignment: .trailing)
-                .padding(.bottom, 6)
         }
         .padding(.leading, 20)
         .padding(.trailing, 20)
