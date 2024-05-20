@@ -11,6 +11,11 @@ import SwiftUI
 struct ContentView: View {
     @ObservedObject private var model = ContentModel()
 
+    // swiftlint:disable force_cast
+    private let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+    private let bundle = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+    // swiftlint:enable force_cast
+
     var body: some View {
         VStack(spacing: 0) {
             HStack(spacing: 0) {
@@ -90,6 +95,11 @@ struct ContentView: View {
             }
 
             Spacer()
+
+            Text("\(version) (\(bundle))")
+                .font(.footnote)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.bottom, 6)
         }
         .padding(.leading, 20)
         .padding(.trailing, 20)
