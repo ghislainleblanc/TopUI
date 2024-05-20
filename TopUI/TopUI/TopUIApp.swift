@@ -11,13 +11,17 @@ import SwiftUI
 struct TopUIApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
+    static let width: CGFloat = 400
+    static let height: CGFloat = 500
+
     var body: some Scene {
         WindowGroup {
             ContentView()
-                .frame(width: 400, height: 500)
+                .frame(width: Self.width, height: Self.height)
                 .onAppear {
                     for window in NSApplication.shared.windows {
                         window.level = .floating
+                        window.styleMask = [.titled]
                     }
                 }
         }
