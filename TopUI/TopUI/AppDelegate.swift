@@ -9,7 +9,7 @@ import Cocoa
 import SwiftUI
 
 class AppDelegate: NSObject, NSApplicationDelegate {
-    var statusBarController: StatusBarController?
+    private var statusBarController: StatusBarController?
 
     func applicationDidFinishLaunching(_ aNotification: Notification) {
         statusBarController = StatusBarController.shared

@@ -15,7 +15,7 @@ struct MemoryUsage {
     let compressed: Double
     let physical: Double
 
-    func totalMemory() -> Double {
+    var totalMemory: Double {
         free + active + inactive + wired + compressed
     }
 }

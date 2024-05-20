@@ -27,9 +27,15 @@ class StatusBarController {
         popover.contentViewController = NSHostingController(rootView: ContentView())
 
         let menu = NSMenu()
-        menu.addItem(NSMenuItem(title: "Show App", action: #selector(togglePopover(_:)), keyEquivalent: ""))
+        let showAppMenuItem = NSMenuItem(title: "Show", action: #selector(togglePopover(_:)), keyEquivalent: "")
+        showAppMenuItem.target = nil // Ensure the action looks up the responder chain
+        menu.addItem(showAppMenuItem)
+
         menu.addItem(NSMenuItem.separator())
-        menu.addItem(NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q"))
+
+        let quitMenuItem = NSMenuItem(title: "Quit", action: #selector(quit), keyEquivalent: "q")
+        quitMenuItem.target = nil // Ensure the action looks up the responder chain
+        menu.addItem(quitMenuItem)
 
         statusItem?.menu = menu
     }
