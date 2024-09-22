@@ -24,7 +24,7 @@
 // OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
 // THE SOFTWARE.
 
-import Darwin
+@preconcurrency import Darwin
 import IOKit.pwr_mgt
 import Foundation
 

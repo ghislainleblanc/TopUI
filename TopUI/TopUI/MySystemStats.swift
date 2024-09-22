@@ -6,6 +6,7 @@
 //
 //  From: https://github.com/mattgallagher/CwlUtils/blob/master/Sources/CwlUtils/CwlSysctl.swift
 
+@preconcurrency import Darwin
 import Combine
 import Foundation
 

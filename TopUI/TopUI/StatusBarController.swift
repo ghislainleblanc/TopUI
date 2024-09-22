@@ -7,6 +7,7 @@
 
 import SwiftUI
 
+@MainActor
 class StatusBarController {
     static let shared = StatusBarController()
 
@@ -25,6 +26,7 @@ class StatusBarController {
 }
 
 private extension StatusBarController {
+    @MainActor
     @objc
     func quit() {
         NSApp.terminate(nil)
