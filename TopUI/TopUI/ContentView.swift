@@ -9,7 +9,7 @@ import Charts
 import SwiftUI
 
 struct ContentView: View {
-    @ObservedObject private var model = ContentModel()
+    @StateObject private var model = ContentModel()
 
     // swiftlint:disable force_cast
     private let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
