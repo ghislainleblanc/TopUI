@@ -20,8 +20,13 @@ struct TopUIApp: App {
                 .frame(width: Self.width, height: Self.height)
                 .onAppear {
                     for window in NSApplication.shared.windows {
+                        window.styleMask = [.borderless]
+                        window.isOpaque = false
+                        window.alphaValue = 0.9
                         window.level = .floating
-                        window.styleMask = [.titled]
+                        window.titleVisibility = .hidden
+                        window.titlebarAppearsTransparent = true
+                        window.isMovableByWindowBackground = true
                     }
                 }
         }
