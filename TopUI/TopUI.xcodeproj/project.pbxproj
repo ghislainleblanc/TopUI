@@ -98,7 +98,7 @@
 			buildConfigurationList = 85427C822AE7FA3600846D1A /* Build configuration list for PBXNativeTarget "TopUI" */;
 			buildPhases = (
 				85427C6F2AE7FA3500846D1A /* Sources */,
-				85427C892AE812DF00846D1A /* SwiftLint */,
+				85C3D8892D5C304200C9FF76 /* ShellScript */,
 				85427C702AE7FA3500846D1A /* Frameworks */,
 				85427C712AE7FA3500846D1A /* Resources */,
 			);
@@ -135,6 +135,9 @@
 				Base,
 			);
 			mainGroup = 85427C6A2AE7FA3500846D1A;
+			packageReferences = (
+				85C3D8882D5BEE5E00C9FF76 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */,
+			);
 			productRefGroup = 85427C742AE7FA3500846D1A /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -157,8 +160,9 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		85427C892AE812DF00846D1A /* SwiftLint */ = {
+		85C3D8892D5C304200C9FF76 /* ShellScript */ = {
 			isa = PBXShellScriptBuildPhase;
+			alwaysOutOfDate = 1;
 			buildActionMask = 2147483647;
 			files = (
 			);
@@ -167,7 +171,6 @@
 			inputPaths = (
 				"$(SRCROOT)/TopUI",
 			);
-			name = SwiftLint;
 			outputFileListPaths = (
 			);
 			outputPaths = (
@@ -175,7 +178,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "if [[ \"$(uname -m)\" == arm64 ]]; then\n    export PATH=\"/opt/homebrew/bin:$PATH\"\nfi\n\nif which swiftlint > /dev/null; then\n    swiftlint --fix --format\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi\n";
+			shellScript = "SWIFT_PACKAGE_DIR=\"${BUILD_DIR%Build/*}SourcePackages/artifacts\"\nSWIFTLINT_CMD=$(ls \"$SWIFT_PACKAGE_DIR\"/swiftlintplugins/SwiftLintBinary/SwiftLintBinary.artifactbundle/swiftlint-*-macos/bin/swiftlint | head -n 1)\n\nif test -f \"$SWIFTLINT_CMD\" 2>&1\nthen\n    \"$SWIFTLINT_CMD\"\nelse\n    echo \"warning: `swiftlint` command not found - See https://github.com/realm/SwiftLint#installation for installation instructions.\"\nfi\n";
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -409,6 +412,17 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		85C3D8882D5BEE5E00C9FF76 /* XCRemoteSwiftPackageReference "SwiftLintPlugins" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SimplyDanny/SwiftLintPlugins";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.58.2;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
 	};
 	rootObject = 85427C6B2AE7FA3500846D1A /* Project object */;
 }

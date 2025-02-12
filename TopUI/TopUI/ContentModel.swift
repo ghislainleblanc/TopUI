@@ -25,18 +25,18 @@ class ContentModel: ObservableObject {
     private var cancellables = [AnyCancellable]()
 
     init() {
-        mySystemStats.cpuUsagePublisher.sink(receiveValue: { [weak self] cpuUsage in
-            self?.cpuUsage = cpuUsage
+        mySystemStats.cpuUsagePublisher.sink(receiveValue: { [unowned self] cpuUsage in
+            self.cpuUsage = cpuUsage
         })
         .store(in: &cancellables)
 
-        mySystemStats.memoryUsagePublisher.sink(receiveValue: { [weak self] memoryUsage in
-            self?.memoryUsage = memoryUsage
+        mySystemStats.memoryUsagePublisher.sink(receiveValue: { [unowned self] memoryUsage in
+            self.memoryUsage = memoryUsage
         })
         .store(in: &cancellables)
 
-        mySystemStats.gpuUsagePublisher.sink(receiveValue: { [weak self] gpuUsage in
-            self?.gpuUsage = gpuUsage
+        mySystemStats.gpuUsagePublisher.sink(receiveValue: { [unowned self] gpuUsage in
+            self.gpuUsage = gpuUsage
         })
         .store(in: &cancellables)
 
