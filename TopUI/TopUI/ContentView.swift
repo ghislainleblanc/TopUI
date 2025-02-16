@@ -25,6 +25,7 @@ struct ContentView: View {
                     VStack(spacing: 0) {
                         ForEach(model.cpuUsage) { coreUsage in
                             Text("Core \(coreUsage.id): \(Int(coreUsage.usage * 100))%")
+                                .font(.system(size: 12).bold())
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
@@ -37,7 +38,7 @@ struct ContentView: View {
                             )
                         }
                     }
-                    .frame(width: CGFloat(model.cpuUsage.count * 20))
+                    .frame(width: CGFloat(model.cpuUsage.count * 18))
                     .chartXScale(domain: 0...model.cpuUsage.count + 1)
                     .chartXAxis {
                         AxisMarks(values: .automatic(desiredCount: model.cpuUsage.count)) { value in
@@ -55,24 +56,31 @@ struct ContentView: View {
 
                 VStack(spacing: 0) {
                     Text("Free Memory: \(String(format: "%.2f", model.memoryUsage.free))GB")
+                        .font(.system(size: 12).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Active Memory: \(String(format: "%.2f", model.memoryUsage.active))GB")
+                        .font(.system(size: 12).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Inactive Memory: \(String(format: "%.2f", model.memoryUsage.inactive))GB")
+                        .font(.system(size: 12).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Wired Memory: \(String(format: "%.2f", model.memoryUsage.wired))GB")
+                        .font(.system(size: 12).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Compressed Memory: \(String(format: "%.2f", model.memoryUsage.compressed))GB")
+                        .font(.system(size: 12).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Total Allocated Memory: \(String(format: "%.2f", model.memoryUsage.totalMemory))GB")
+                        .font(.system(size: 12).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Physical Memory: \(String(format: "%.2f", model.memoryUsage.physical))GB")
+                        .font(.system(size: 12).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
                 .padding(.bottom, 20)
@@ -94,6 +102,7 @@ struct ContentView: View {
                         .padding(.bottom, 6)
 
                         Text("GPU Usage: \(model.gpuUsage)%")
+                            .font(.system(size: 12).bold())
                             .frame(width: 130, alignment: .leading)
                     }
 
