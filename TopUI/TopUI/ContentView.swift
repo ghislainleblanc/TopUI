@@ -25,7 +25,7 @@ struct ContentView: View {
                     VStack(spacing: 0) {
                         ForEach(model.cpuUsage) { coreUsage in
                             Text("Core \(coreUsage.id): \(Int(coreUsage.usage * 100))%")
-                                .font(.system(size: 12).bold())
+                                .font(.system(size: 10).bold())
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
@@ -49,46 +49,44 @@ struct ContentView: View {
                     }
                     .chartYScale(domain: 0...100)
                 }
-                .padding(.bottom, 20)
 
                 Divider()
-                    .padding(.bottom, 20)
-                    .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10)
 
                 VStack(spacing: 0) {
                     Text("Free Memory: \(String(format: "%.2f", model.memoryUsage.free))GB")
-                        .font(.system(size: 12).bold())
+                        .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Active Memory: \(String(format: "%.2f", model.memoryUsage.active))GB")
-                        .font(.system(size: 12).bold())
+                        .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Inactive Memory: \(String(format: "%.2f", model.memoryUsage.inactive))GB")
-                        .font(.system(size: 12).bold())
+                        .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Wired Memory: \(String(format: "%.2f", model.memoryUsage.wired))GB")
-                        .font(.system(size: 12).bold())
+                        .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Compressed Memory: \(String(format: "%.2f", model.memoryUsage.compressed))GB")
-                        .font(.system(size: 12).bold())
+                        .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Total Allocated Memory: \(String(format: "%.2f", model.memoryUsage.totalMemory))GB")
-                        .font(.system(size: 12).bold())
+                        .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Physical Memory: \(String(format: "%.2f", model.memoryUsage.physical))GB")
-                        .font(.system(size: 12).bold())
+                        .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
-                .padding(.bottom, 20)
 
                 Divider()
-                    .padding(.bottom, 20)
-                    .padding(.horizontal, 20)
+                    .padding(.vertical, 8)
+                    .padding(.horizontal, 10)
 
                 HStack(spacing: 0) {
                     VStack(spacing: 0) {
@@ -103,7 +101,7 @@ struct ContentView: View {
                         .padding(.bottom, 6)
 
                         Text("GPU Usage: \(model.gpuUsage)%")
-                            .font(.system(size: 12).bold())
+                            .font(.system(size: 10).bold())
                             .frame(width: 130, alignment: .leading)
                     }
 

@@ -11,8 +11,8 @@ import SwiftUI
 struct TopUIApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    private static let width: CGFloat = 300
-    private static let height: CGFloat = 500
+    private static let width: CGFloat = 280
+    private static let height: CGFloat = 390
 
     var body: some Scene {
         WindowGroup {
