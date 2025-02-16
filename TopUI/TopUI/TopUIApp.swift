@@ -11,8 +11,8 @@ import SwiftUI
 struct TopUIApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    static let width: CGFloat = 500
-    static let height: CGFloat = 500
+    private static let width: CGFloat = 500
+    private static let height: CGFloat = 500
 
     var body: some Scene {
         WindowGroup {
@@ -22,7 +22,6 @@ struct TopUIApp: App {
                     for window in NSApplication.shared.windows {
                         window.styleMask = [.borderless]
                         window.isOpaque = false
-                        window.alphaValue = 0.9
                         window.level = .floating
                         window.titleVisibility = .hidden
                         window.titlebarAppearsTransparent = true
