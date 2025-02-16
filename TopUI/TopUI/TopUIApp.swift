@@ -26,6 +26,10 @@ struct TopUIApp: App {
                         window.titleVisibility = .hidden
                         window.titlebarAppearsTransparent = true
                         window.isMovableByWindowBackground = true
+                        window.backgroundColor = .clear
+                        window.contentView?.wantsLayer = true
+                        window.contentView?.layer?.cornerRadius = 20
+                        window.contentView?.layer?.masksToBounds = true
                     }
                 }
         }
