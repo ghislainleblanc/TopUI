@@ -38,12 +38,13 @@ struct ContentView: View {
                             )
                         }
                     }
-                    .frame(width: CGFloat(model.cpuUsage.count * 18))
+                    .frame(width: CGFloat(model.cpuUsage.count * 12))
                     .chartXScale(domain: 0...model.cpuUsage.count + 1)
                     .chartXAxis {
                         AxisMarks(values: .automatic(desiredCount: model.cpuUsage.count)) { value in
                             AxisGridLine()
                             AxisValueLabel("\(value.as(Int.self)!)", anchor: .top)
+                                .font(.system(size: 6))
                         }
                     }
                     .chartYScale(domain: 0...100)
