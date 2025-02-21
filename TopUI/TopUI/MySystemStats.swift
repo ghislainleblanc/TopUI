@@ -35,6 +35,13 @@ final class MySystemStats {
         gpuUsageSubject.eraseToAnyPublisher()
     }
 
+    private let networkUsageSubject = CurrentValueSubject<NetworkUsage, Never>(
+        .init(rxBytesPerSecond: 0, txBytesPerSecond: 0)
+    )
+    var networkUsagePublisher: AnyPublisher<NetworkUsage, Never> {
+        networkUsageSubject.eraseToAnyPublisher()
+    }
+
     private var cpuInfo: processor_info_array_t?
     private var prevCpuInfo: processor_info_array_t?
     private var numCpuInfo: mach_msg_type_number_t = 0
@@ -82,6 +89,7 @@ private extension MySystemStats {
         getCPUUsage()
         getMemoryUsage()
         getGPUUsage()
+        getNetworkUsage()
     }
 
     func getMemoryUsage() {
@@ -208,5 +216,26 @@ private extension MySystemStats {
                 gpuUsageSubject.send(utilizationCandidates.reduce(nil, { $0 ?? $1 }) ?? 0)
             }
         }
+    }
+
+    func getNetworkUsage() {
+        var ifaddr: UnsafeMutablePointer<ifaddrs>?
+        var rxBytes: UInt64 = 0
+        var txBytes: UInt64 = 0
+
+        if getifaddrs(&ifaddr) == 0 {
+            var ptr = ifaddr
+            while ptr != nil {
+                if let ifa = ptr?.pointee, ifa.ifa_addr?.pointee.sa_family == UInt8(AF_LINK) {
+                    let data = unsafeBitCast(ifa.ifa_data, to: UnsafePointer<if_data>?.self)?.pointee
+                    rxBytes += UInt64(data?.ifi_ibytes ?? 0)
+                    txBytes += UInt64(data?.ifi_obytes ?? 0)
+                }
+                ptr = ptr?.pointee.ifa_next
+            }
+            freeifaddrs(ifaddr)
+        }
+
+        networkUsageSubject.send(.init(rxBytesPerSecond: rxBytes, txBytesPerSecond: txBytes))
     }
 }

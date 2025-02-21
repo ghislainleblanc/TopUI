@@ -18,6 +18,7 @@
 		856CD7B22AE8905A00E6097C /* MemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856CD7B12AE8905A00E6097C /* MemoryUsage.swift */; };
 		85B0305E2BFAC54400F0D007 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B0305D2BFAC54400F0D007 /* StatusBarController.swift */; };
 		85B030602BFAC5A900F0D007 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B0305F2BFAC5A900F0D007 /* AppDelegate.swift */; };
+		85B0483C2D68E7B800C4D624 /* NetworkUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B0483B2D68E7B800C4D624 /* NetworkUsage.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +35,7 @@
 		856CD7B12AE8905A00E6097C /* MemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUsage.swift; sourceTree = "<group>"; };
 		85B0305D2BFAC54400F0D007 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
 		85B0305F2BFAC5A900F0D007 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		85B0483B2D68E7B800C4D624 /* NetworkUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkUsage.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -73,6 +75,7 @@
 				853712AC2AE820E700292128 /* CoreUsage.swift */,
 				856CD7B12AE8905A00E6097C /* MemoryUsage.swift */,
 				85427C872AE8119D00846D1A /* MySystemStats.swift */,
+				85B0483B2D68E7B800C4D624 /* NetworkUsage.swift */,
 				85B0305D2BFAC54400F0D007 /* StatusBarController.swift */,
 				850786B72AE88E5F00CC04D5 /* System.swift */,
 				85427C762AE7FA3500846D1A /* TopUIApp.swift */,
@@ -187,6 +190,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				85B0483C2D68E7B800C4D624 /* NetworkUsage.swift in Sources */,
 				85427C792AE7FA3500846D1A /* ContentView.swift in Sources */,
 				85B0305E2BFAC54400F0D007 /* StatusBarController.swift in Sources */,
 				85427C772AE7FA3500846D1A /* TopUIApp.swift in Sources */,
