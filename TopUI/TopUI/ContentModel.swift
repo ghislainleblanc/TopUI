@@ -19,9 +19,12 @@ class ContentModel: ObservableObject {
         physical: 0
     )
     @Published private(set) var gpuUsage = 0
+    @Published var rxSpeeds: [Double] = []
+    @Published var txSpeeds: [Double] = []
 
     private let mySystemStats = MySystemStats()
 
+    private var previousNetworkUsage = NetworkUsage(rxBytesPerSecond: 0, txBytesPerSecond: 0)
     private var cancellables = [AnyCancellable]()
 
     init() {
@@ -37,6 +40,11 @@ class ContentModel: ObservableObject {
 
         mySystemStats.gpuUsagePublisher.sink(receiveValue: { [unowned self] gpuUsage in
             self.gpuUsage = gpuUsage
+        })
+        .store(in: &cancellables)
+
+        mySystemStats.networkUsagePublisher.sink(receiveValue: { [unowned self] networkUsage in
+            self.previousNetworkUsage = networkUsage
         })
         .store(in: &cancellables)
 
