@@ -39,7 +39,7 @@ struct ContentView: View {
                                 )
                             }
                         }
-                        .frame(width: 168, height: 60)
+                        .frame(width: CGFloat(model.cpuUsage.count * 12))
                         .chartXScale(domain: 0...model.cpuUsage.count + 1)
                         .chartXAxis {
                             AxisMarks(values: .automatic(desiredCount: model.cpuUsage.count)) { value in
@@ -49,18 +49,6 @@ struct ContentView: View {
                             }
                         }
                         .chartYScale(domain: 0...100)
-
-                        Chart {
-                            ForEach(Array(model.rxSpeeds.enumerated()), id: \ .0) { index, value in
-                                LineMark(x: .value("", index), y: .value("", value))
-                                    .foregroundStyle(.blue)
-                            }
-                            ForEach(Array(model.txSpeeds.enumerated()), id: \ .0) { index, value in
-                                LineMark(x: .value("", index), y: .value("", value))
-                                    .foregroundStyle(.red)
-                            }
-                        }
-                        .frame(width: 168, height: 60)
                     }
                 }
 
@@ -94,6 +82,14 @@ struct ContentView: View {
                         .frame(maxWidth: .infinity, alignment: .leading)
 
                     Text("Physical Memory: \(String(format: "%.2f", model.memoryUsage.physical))GB")
+                        .font(.system(size: 10).bold())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text("Network Received: \(Int(model.rxCurrentSpeed.rounded()))KB/s")
+                        .font(.system(size: 10).bold())
+                        .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text("Network Sent: \(Int(model.txCurrentSpeed.rounded()))KB/s")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }

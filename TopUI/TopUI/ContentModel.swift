@@ -19,8 +19,10 @@ class ContentModel: ObservableObject {
         physical: 0
     )
     @Published private(set) var gpuUsage = 0
-    @Published var rxSpeeds = [Double]()
-    @Published var txSpeeds = [Double]()
+    @Published var rxSpeeds = [Double](repeating: 0, count: 50)
+    @Published var txSpeeds = [Double](repeating: 0, count: 50)
+    @Published var rxCurrentSpeed: Double = 0
+    @Published var txCurrentSpeed: Double = 0
 
     private let mySystemStats = MySystemStats()
 
@@ -45,8 +47,12 @@ class ContentModel: ObservableObject {
 
         mySystemStats.networkUsagePublisher.sink(receiveValue: { [unowned self] networkUsage in
             if let previousNetworkUsage = self.previousNetworkUsage {
-                let rxSpeed = Double(networkUsage.rxBytesPerSecond - previousNetworkUsage.rxBytesPerSecond) / 1024.0
-                let txSpeed = Double(networkUsage.txBytesPerSecond - previousNetworkUsage.txBytesPerSecond) / 1024.0
+                let rxSpeed = (
+                    Double(networkUsage.rxBytesPerSecond - previousNetworkUsage.rxBytesPerSecond) * 2
+                ) / 1024.0
+                let txSpeed = (
+                    Double(networkUsage.txBytesPerSecond - previousNetworkUsage.txBytesPerSecond) * 2
+                ) / 1024.0
 
                 if self.rxSpeeds.count > 50 {
                     self.rxSpeeds.removeFirst()
@@ -55,6 +61,8 @@ class ContentModel: ObservableObject {
 
                 self.rxSpeeds.append(rxSpeed)
                 self.txSpeeds.append(txSpeed)
+                self.rxCurrentSpeed = rxSpeed
+                self.txCurrentSpeed = txSpeed
             }
 
             self.previousNetworkUsage = networkUsage
