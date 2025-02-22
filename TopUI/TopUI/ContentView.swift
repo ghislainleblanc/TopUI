@@ -30,24 +30,38 @@ struct ContentView: View {
                         }
                     }
 
-                    Chart {
-                        ForEach(model.cpuUsage) { coreUsage in
-                            BarMark(
-                                x: .value("Core", coreUsage.id),
-                                y: .value("Usage", Int(coreUsage.usage * 100))
-                            )
+                    VStack(spacing: 10) {
+                        Chart {
+                            ForEach(model.cpuUsage) { coreUsage in
+                                BarMark(
+                                    x: .value("Core", coreUsage.id),
+                                    y: .value("Usage", Int(coreUsage.usage * 100))
+                                )
+                            }
                         }
-                    }
-                    .frame(width: CGFloat(model.cpuUsage.count * 12))
-                    .chartXScale(domain: 0...model.cpuUsage.count + 1)
-                    .chartXAxis {
-                        AxisMarks(values: .automatic(desiredCount: model.cpuUsage.count)) { value in
-                            AxisGridLine()
-                            AxisValueLabel("\(value.as(Int.self)!)", anchor: .top)
-                                .font(.system(size: 6))
+                        .frame(width: 168, height: 60)
+                        .chartXScale(domain: 0...model.cpuUsage.count + 1)
+                        .chartXAxis {
+                            AxisMarks(values: .automatic(desiredCount: model.cpuUsage.count)) { value in
+                                AxisGridLine()
+                                AxisValueLabel("\(value.as(Int.self)!)", anchor: .top)
+                                    .font(.system(size: 6))
+                            }
                         }
+                        .chartYScale(domain: 0...100)
+
+                        Chart {
+                            ForEach(Array(model.rxSpeeds.enumerated()), id: \ .0) { index, value in
+                                LineMark(x: .value("", index), y: .value("", value))
+                                    .foregroundStyle(.blue)
+                            }
+                            ForEach(Array(model.txSpeeds.enumerated()), id: \ .0) { index, value in
+                                LineMark(x: .value("", index), y: .value("", value))
+                                    .foregroundStyle(.red)
+                            }
+                        }
+                        .frame(width: 168, height: 60)
                     }
-                    .chartYScale(domain: 0...100)
                 }
 
                 Divider()
