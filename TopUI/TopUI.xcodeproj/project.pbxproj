@@ -13,7 +13,7 @@
 		85427C792AE7FA3500846D1A /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C782AE7FA3500846D1A /* ContentView.swift */; };
 		85427C7B2AE7FA3600846D1A /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85427C7A2AE7FA3600846D1A /* Assets.xcassets */; };
 		85427C7E2AE7FA3600846D1A /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 85427C7D2AE7FA3600846D1A /* Preview Assets.xcassets */; };
-		85427C862AE7FCA200846D1A /* ContentModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C852AE7FCA200846D1A /* ContentModel.swift */; };
+		85427C862AE7FCA200846D1A /* ContentViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C852AE7FCA200846D1A /* ContentViewModel.swift */; };
 		85427C882AE8119D00846D1A /* MySystemStats.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85427C872AE8119D00846D1A /* MySystemStats.swift */; };
 		856CD7B22AE8905A00E6097C /* MemoryUsage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 856CD7B12AE8905A00E6097C /* MemoryUsage.swift */; };
 		85B0305E2BFAC54400F0D007 /* StatusBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 85B0305D2BFAC54400F0D007 /* StatusBarController.swift */; };
@@ -30,7 +30,7 @@
 		85427C7A2AE7FA3600846D1A /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		85427C7D2AE7FA3600846D1A /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		85427C7F2AE7FA3600846D1A /* TopUI.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = TopUI.entitlements; sourceTree = "<group>"; };
-		85427C852AE7FCA200846D1A /* ContentModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentModel.swift; sourceTree = "<group>"; };
+		85427C852AE7FCA200846D1A /* ContentViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentViewModel.swift; sourceTree = "<group>"; };
 		85427C872AE8119D00846D1A /* MySystemStats.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MySystemStats.swift; sourceTree = "<group>"; };
 		856CD7B12AE8905A00E6097C /* MemoryUsage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryUsage.swift; sourceTree = "<group>"; };
 		85B0305D2BFAC54400F0D007 /* StatusBarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatusBarController.swift; sourceTree = "<group>"; };
@@ -70,7 +70,7 @@
 			children = (
 				85427C7F2AE7FA3600846D1A /* TopUI.entitlements */,
 				85B0305F2BFAC5A900F0D007 /* AppDelegate.swift */,
-				85427C852AE7FCA200846D1A /* ContentModel.swift */,
+				85427C852AE7FCA200846D1A /* ContentViewModel.swift */,
 				85427C782AE7FA3500846D1A /* ContentView.swift */,
 				853712AC2AE820E700292128 /* CoreUsage.swift */,
 				856CD7B12AE8905A00E6097C /* MemoryUsage.swift */,
@@ -196,7 +196,7 @@
 				85427C772AE7FA3500846D1A /* TopUIApp.swift in Sources */,
 				85B030602BFAC5A900F0D007 /* AppDelegate.swift in Sources */,
 				85427C882AE8119D00846D1A /* MySystemStats.swift in Sources */,
-				85427C862AE7FCA200846D1A /* ContentModel.swift in Sources */,
+				85427C862AE7FCA200846D1A /* ContentViewModel.swift in Sources */,
 				856CD7B22AE8905A00E6097C /* MemoryUsage.swift in Sources */,
 				850786B82AE88E5F00CC04D5 /* System.swift in Sources */,
 				853712AD2AE820E700292128 /* CoreUsage.swift in Sources */,
@@ -339,7 +339,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"TopUI/Preview Content\"";
 				DEVELOPMENT_TEAM = 9Y789C28ZZ;
@@ -371,7 +371,7 @@
 				"CODE_SIGN_IDENTITY[sdk=macosx*]" = "-";
 				CODE_SIGN_STYLE = Automatic;
 				COMBINE_HIDPI_IMAGES = YES;
-				CURRENT_PROJECT_VERSION = 13;
+				CURRENT_PROJECT_VERSION = 14;
 				DEAD_CODE_STRIPPING = YES;
 				DEVELOPMENT_ASSET_PATHS = "\"TopUI/Preview Content\"";
 				DEVELOPMENT_TEAM = 9Y789C28ZZ;

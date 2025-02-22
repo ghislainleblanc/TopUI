@@ -9,7 +9,7 @@ import Charts
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var model = ContentModel()
+    @StateObject private var viewModel = ContentViewModel()
 
     // swiftlint:disable force_cast
     private let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -23,7 +23,7 @@ struct ContentView: View {
             VStack(spacing: 0) {
                 HStack(spacing: 0) {
                     VStack(spacing: 0) {
-                        ForEach(model.cpuUsage) { coreUsage in
+                        ForEach(viewModel.cpuUsage) { coreUsage in
                             Text("Core \(coreUsage.id): \(Int(coreUsage.usage * 100))%")
                                 .font(.system(size: 10).bold())
                                 .frame(maxWidth: .infinity, alignment: .leading)
@@ -32,17 +32,17 @@ struct ContentView: View {
 
                     VStack(spacing: 10) {
                         Chart {
-                            ForEach(model.cpuUsage) { coreUsage in
+                            ForEach(viewModel.cpuUsage) { coreUsage in
                                 BarMark(
                                     x: .value("Core", coreUsage.id),
                                     y: .value("Usage", Int(coreUsage.usage * 100))
                                 )
                             }
                         }
-                        .frame(width: CGFloat(model.cpuUsage.count * 12))
-                        .chartXScale(domain: 0...model.cpuUsage.count + 1)
+                        .frame(width: CGFloat(viewModel.cpuUsage.count * 12))
+                        .chartXScale(domain: 0...viewModel.cpuUsage.count + 1)
                         .chartXAxis {
-                            AxisMarks(values: .automatic(desiredCount: model.cpuUsage.count)) { value in
+                            AxisMarks(values: .automatic(desiredCount: viewModel.cpuUsage.count)) { value in
                                 AxisGridLine()
                                 AxisValueLabel("\(value.as(Int.self)!)", anchor: .top)
                                     .font(.system(size: 6))
@@ -57,39 +57,39 @@ struct ContentView: View {
                     .padding(.horizontal, 10)
 
                 VStack(spacing: 0) {
-                    Text("Free Memory: \(String(format: "%.2f", model.memoryUsage.free))GB")
+                    Text("Free Memory: \(String(format: "%.2f", viewModel.memoryUsage.free))GB")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Active Memory: \(String(format: "%.2f", model.memoryUsage.active))GB")
+                    Text("Active Memory: \(String(format: "%.2f", viewModel.memoryUsage.active))GB")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Inactive Memory: \(String(format: "%.2f", model.memoryUsage.inactive))GB")
+                    Text("Inactive Memory: \(String(format: "%.2f", viewModel.memoryUsage.inactive))GB")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Wired Memory: \(String(format: "%.2f", model.memoryUsage.wired))GB")
+                    Text("Wired Memory: \(String(format: "%.2f", viewModel.memoryUsage.wired))GB")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Compressed Memory: \(String(format: "%.2f", model.memoryUsage.compressed))GB")
+                    Text("Compressed Memory: \(String(format: "%.2f", viewModel.memoryUsage.compressed))GB")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Total Allocated Memory: \(String(format: "%.2f", model.memoryUsage.totalMemory))GB")
+                    Text("Total Allocated Memory: \(String(format: "%.2f", viewModel.memoryUsage.totalMemory))GB")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Physical Memory: \(String(format: "%.2f", model.memoryUsage.physical))GB")
+                    Text("Physical Memory: \(String(format: "%.2f", viewModel.memoryUsage.physical))GB")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Network Received: \(Int(model.rxCurrentSpeed.rounded()))KB/s")
+                    Text("Network Received: \(Int(viewModel.rxCurrentSpeed.rounded()))KB/s")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Network Sent: \(Int(model.txCurrentSpeed.rounded()))KB/s")
+                    Text("Network Sent: \(Int(viewModel.txCurrentSpeed.rounded()))KB/s")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
                 }
@@ -102,7 +102,7 @@ struct ContentView: View {
                     VStack(spacing: 0) {
                         Chart {
                             BarMark(
-                                x: .value("Usage", model.gpuUsage),
+                                x: .value("Usage", viewModel.gpuUsage),
                                 width: 100
                             )
                         }
@@ -110,7 +110,7 @@ struct ContentView: View {
                         .frame(width: 130, alignment: .leading)
                         .padding(.bottom, 6)
 
-                        Text("GPU Usage: \(model.gpuUsage)%")
+                        Text("GPU Usage: \(viewModel.gpuUsage)%")
                             .font(.system(size: 10).bold())
                             .frame(width: 130, alignment: .leading)
                     }

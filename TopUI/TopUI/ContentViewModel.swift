@@ -1,5 +1,5 @@
 //
-//  ContentModel.swift
+//  ContentViewModel.swift
 //  TopUI
 //
 //  Created by Ghislain Leblanc on 2023-10-24.
@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-class ContentModel: ObservableObject {
+class ContentViewModel: ObservableObject {
     @Published private(set) var cpuUsage = [CoreUsage]()
     @Published private(set) var memoryUsage = MemoryUsage(
         free: 0,
@@ -30,22 +30,24 @@ class ContentModel: ObservableObject {
     private var cancellables = [AnyCancellable]()
 
     init() {
-        mySystemStats.cpuUsagePublisher.sink(receiveValue: { [unowned self] cpuUsage in
-            self.cpuUsage = cpuUsage
+        mySystemStats.cpuUsagePublisher.sink(receiveValue: { [weak self] cpuUsage in
+            self?.cpuUsage = cpuUsage
         })
         .store(in: &cancellables)
 
-        mySystemStats.memoryUsagePublisher.sink(receiveValue: { [unowned self] memoryUsage in
-            self.memoryUsage = memoryUsage
+        mySystemStats.memoryUsagePublisher.sink(receiveValue: { [weak self] memoryUsage in
+            self?.memoryUsage = memoryUsage
         })
         .store(in: &cancellables)
 
-        mySystemStats.gpuUsagePublisher.sink(receiveValue: { [unowned self] gpuUsage in
-            self.gpuUsage = gpuUsage
+        mySystemStats.gpuUsagePublisher.sink(receiveValue: { [weak self] gpuUsage in
+            self?.gpuUsage = gpuUsage
         })
         .store(in: &cancellables)
 
-        mySystemStats.networkUsagePublisher.sink(receiveValue: { [unowned self] networkUsage in
+        mySystemStats.networkUsagePublisher.sink(receiveValue: { [weak self] networkUsage in
+            guard let self else { return }
+
             if let previousNetworkUsage = self.previousNetworkUsage {
                 let rxSpeed = (
                     Double(networkUsage.rxBytesPerSecond - previousNetworkUsage.rxBytesPerSecond) * 2
