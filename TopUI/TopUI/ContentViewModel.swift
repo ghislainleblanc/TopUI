@@ -50,10 +50,10 @@ class ContentViewModel: ObservableObject {
 
             if let previousNetworkUsage = self.previousNetworkUsage {
                 let rxSpeed = (
-                    Double(networkUsage.rxBytesPerSecond - previousNetworkUsage.rxBytesPerSecond) * 2
+                    Double(Int(networkUsage.rxBytesPerSecond) - Int(previousNetworkUsage.rxBytesPerSecond)) * 2
                 ) / 1024.0
                 let txSpeed = (
-                    Double(networkUsage.txBytesPerSecond - previousNetworkUsage.txBytesPerSecond) * 2
+                    Double(Int(networkUsage.txBytesPerSecond) - Int(previousNetworkUsage.txBytesPerSecond)) * 2
                 ) / 1024.0
 
                 if self.rxSpeeds.count > 50 {
