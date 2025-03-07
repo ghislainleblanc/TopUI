@@ -50,17 +50,12 @@ struct ContentView: View {
                         }
                         .chartYScale(domain: 0...100)
 
-                        Spacer()
-
                         VStack(spacing: 0) {
                             Chart {
-                                BarMark(
-                                    x: .value("Usage", viewModel.gpuUsage),
-                                    width: 100
-                                )
+                                BarMark(x: .value("Usage", viewModel.gpuUsage))
                             }
                             .chartXScale(domain: 0...100)
-//                            .frame(width: CGFloat(viewModel.cpuUsage.count * 12), height: 100)
+                            .frame(width: CGFloat(viewModel.cpuUsage.count * 12), height: 40)
                             .padding(.bottom, 6)
 
                             Text("GPU Usage: \(viewModel.gpuUsage)%")
@@ -68,6 +63,7 @@ struct ContentView: View {
                                 .frame(width: CGFloat(viewModel.cpuUsage.count * 12), alignment: .leading)
                         }
                     }
+                    .padding(.top, 20)
                 }
 
                 Divider()
