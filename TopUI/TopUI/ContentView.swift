@@ -49,6 +49,24 @@ struct ContentView: View {
                             }
                         }
                         .chartYScale(domain: 0...100)
+
+                        Spacer()
+
+                        VStack(spacing: 0) {
+                            Chart {
+                                BarMark(
+                                    x: .value("Usage", viewModel.gpuUsage),
+                                    width: 100
+                                )
+                            }
+                            .chartXScale(domain: 0...100)
+//                            .frame(width: CGFloat(viewModel.cpuUsage.count * 12), height: 100)
+                            .padding(.bottom, 6)
+
+                            Text("GPU Usage: \(viewModel.gpuUsage)%")
+                                .font(.system(size: 10).bold())
+                                .frame(width: CGFloat(viewModel.cpuUsage.count * 12), alignment: .leading)
+                        }
                     }
                 }
 
@@ -92,45 +110,15 @@ struct ContentView: View {
                     Text("Network Sent: \(Int(viewModel.txCurrentSpeed.rounded()))KB/s")
                         .font(.system(size: 10).bold())
                         .frame(maxWidth: .infinity, alignment: .leading)
+
+                    Text("\(version) (\(bundle))")
+                        .font(.footnote)
+                        .frame(maxWidth: .infinity, alignment: .trailing)
                 }
-
-                Divider()
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 10)
-
-                HStack(spacing: 0) {
-                    VStack(spacing: 0) {
-                        Chart {
-                            BarMark(
-                                x: .value("Usage", viewModel.gpuUsage),
-                                width: 100
-                            )
-                        }
-                        .chartXScale(domain: 0...125)
-                        .frame(width: 130, alignment: .leading)
-                        .padding(.bottom, 6)
-
-                        Text("GPU Usage: \(viewModel.gpuUsage)%")
-                            .font(.system(size: 10).bold())
-                            .frame(width: 130, alignment: .leading)
-                    }
-
-                    Spacer()
-
-                    VStack(spacing: 0) {
-                        Spacer()
-
-                        Text("\(version) (\(bundle))")
-                            .font(.footnote)
-                            .frame(alignment: .trailing)
-                    }
-                }
-
-                Spacer()
             }
             .padding(.leading, 20)
             .padding(.trailing, 20)
-            .padding(.top, 20)
+            .padding(.vertical, 10)
         }
     }
 }
