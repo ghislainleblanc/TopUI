@@ -21,7 +21,7 @@ struct ContentView: View {
             Color(.windowBackgroundColor).ignoresSafeArea()
 
             VStack(spacing: 0) {
-                HStack(spacing: 0) {
+                HStack(spacing: 6) {
                     VStack(spacing: 0) {
                         ForEach(viewModel.cpuUsage) { coreUsage in
                             Text("Core \(coreUsage.id): \(Int(coreUsage.usage * 100))%")
