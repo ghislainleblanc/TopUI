@@ -19,10 +19,10 @@ class ContentViewModel: ObservableObject {
         physical: 0
     )
     @Published private(set) var gpuUsage = 0
-    @Published var rxSpeeds = [Double](repeating: 0, count: 50)
-    @Published var txSpeeds = [Double](repeating: 0, count: 50)
-    @Published var rxCurrentSpeed: Double = 0
-    @Published var txCurrentSpeed: Double = 0
+    @Published private(set) var rxSpeeds = [Double](repeating: 0, count: 50)
+    @Published private(set) var txSpeeds = [Double](repeating: 0, count: 50)
+    @Published private(set) var rxCurrentSpeed: Double = 0
+    @Published private(set) var txCurrentSpeed: Double = 0
 
     private let mySystemStats = MySystemStats()
 
