@@ -9,12 +9,14 @@ import SwiftUI
 
 @main
 struct TopUIApp: App {
+    @State private var contentViewModel = ContentViewModel()
+
     private static let width: CGFloat = 290
     private static let height: CGFloat = 380
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(viewModel: contentViewModel)
                 .frame(width: Self.width, height: Self.height)
                 .onAppear {
                     for window in NSApplication.shared.windows {

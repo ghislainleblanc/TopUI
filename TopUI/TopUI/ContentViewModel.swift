@@ -8,9 +8,9 @@
 import Combine
 import Foundation
 
-class ContentViewModel: ObservableObject {
-    @Published private(set) var cpuUsage = [CoreUsage]()
-    @Published private(set) var memoryUsage = MemoryUsage(
+@Observable class ContentViewModel {
+    private(set) var cpuUsage = [CoreUsage]()
+    private(set) var memoryUsage = MemoryUsage(
         free: 0,
         active: 0,
         inactive: 0,
@@ -18,11 +18,11 @@ class ContentViewModel: ObservableObject {
         compressed: 0,
         physical: 0
     )
-    @Published private(set) var gpuUsage = 0
-    @Published private(set) var rxSpeeds = [Double](repeating: 0, count: 50)
-    @Published private(set) var txSpeeds = [Double](repeating: 0, count: 50)
-    @Published private(set) var rxCurrentSpeed: Double = 0
-    @Published private(set) var txCurrentSpeed: Double = 0
+    private(set) var gpuUsage = 0
+    private(set) var rxSpeeds = [Double](repeating: 0, count: 50)
+    private(set) var txSpeeds = [Double](repeating: 0, count: 50)
+    private(set) var rxCurrentSpeed: Double = 0
+    private(set) var txCurrentSpeed: Double = 0
 
     private let mySystemStats = MySystemStats()
 

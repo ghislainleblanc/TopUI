@@ -9,7 +9,11 @@ import Charts
 import SwiftUI
 
 struct ContentView: View {
-    @StateObject private var viewModel = ContentViewModel()
+    @State private var viewModel: ContentViewModel
+
+    init(viewModel: ContentViewModel) {
+        self.viewModel = viewModel
+    }
 
     // swiftlint:disable force_cast
     private let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -120,5 +124,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(viewModel: .init())
 }
