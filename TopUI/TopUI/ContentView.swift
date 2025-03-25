@@ -20,6 +20,14 @@ struct ContentView: View {
     private let bundle = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
     // swiftlint:enable force_cast
 
+    private var cpuWidth: CGFloat {
+        CGFloat(max(viewModel.cpuUsage.count, 14) * 12)
+    }
+
+    private var cpuHeight: CGFloat {
+        CGFloat(max(viewModel.cpuUsage.count, 14) * 8)
+    }
+
     var body: some View {
         ZStack {
             Color(.windowBackgroundColor).ignoresSafeArea()
@@ -46,10 +54,7 @@ struct ContentView: View {
                                 )
                             }
                         }
-                        .frame(
-                            width: CGFloat(viewModel.cpuUsage.count * 12),
-                            height: CGFloat(viewModel.cpuUsage.count * 8)
-                        )
+                        .frame(width: cpuWidth, height: cpuHeight)
                         .chartXScale(domain: 0...viewModel.cpuUsage.count + 1)
                         .chartXAxis {
                             AxisMarks(values: .automatic(desiredCount: viewModel.cpuUsage.count)) { value in
@@ -65,12 +70,12 @@ struct ContentView: View {
                                 BarMark(x: .value("Usage", viewModel.gpuUsage))
                             }
                             .chartXScale(domain: 0...100)
-                            .frame(width: CGFloat(viewModel.cpuUsage.count * 12), height: 40)
+                            .frame(width: cpuWidth, height: 40)
                             .padding(.bottom, 6)
 
                             Text("GPU Usage: \(viewModel.gpuUsage)%")
                                 .font(.system(size: 10).bold())
-                                .frame(width: CGFloat(viewModel.cpuUsage.count * 12), alignment: .leading)
+                                .frame(width: cpuWidth, alignment: .leading)
                         }
                     }
                     .padding(.top, 20)
@@ -136,10 +141,7 @@ struct ContentView: View {
             .padding(.trailing, 20)
             .padding(.vertical, 10)
         }
-        .frame(
-            maxWidth: CGFloat(viewModel.cpuUsage.count * 12) + 150,
-            maxHeight: CGFloat(viewModel.cpuUsage.count * 12) + 280
-        )
+        .frame(maxWidth: cpuWidth + 150, maxHeight: cpuHeight + 280)
     }
 }
 
