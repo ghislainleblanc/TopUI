@@ -33,6 +33,9 @@ struct ContentView: View {
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
+                    .frame(width: 100)
+
+                    Spacer()
 
                     VStack(spacing: 10) {
                         Chart {
@@ -74,46 +77,55 @@ struct ContentView: View {
                     .padding(.vertical, 8)
                     .padding(.horizontal, 10)
 
-                VStack(spacing: 0) {
-                    Text("Free Memory: \(String(format: "%.2f", viewModel.memoryUsage.free))GB")
-                        .font(.system(size: 10).bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                HStack {
+                    VStack(spacing: 0) {
+                        Text("Free Memory: \(String(format: "%.2f", viewModel.memoryUsage.free))GB")
+                            .font(.system(size: 10).bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Active Memory: \(String(format: "%.2f", viewModel.memoryUsage.active))GB")
-                        .font(.system(size: 10).bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Active Memory: \(String(format: "%.2f", viewModel.memoryUsage.active))GB")
+                            .font(.system(size: 10).bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Inactive Memory: \(String(format: "%.2f", viewModel.memoryUsage.inactive))GB")
-                        .font(.system(size: 10).bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Inactive Memory: \(String(format: "%.2f", viewModel.memoryUsage.inactive))GB")
+                            .font(.system(size: 10).bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Wired Memory: \(String(format: "%.2f", viewModel.memoryUsage.wired))GB")
-                        .font(.system(size: 10).bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Wired Memory: \(String(format: "%.2f", viewModel.memoryUsage.wired))GB")
+                            .font(.system(size: 10).bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Compressed Memory: \(String(format: "%.2f", viewModel.memoryUsage.compressed))GB")
-                        .font(.system(size: 10).bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Compressed Memory: \(String(format: "%.2f", viewModel.memoryUsage.compressed))GB")
+                            .font(.system(size: 10).bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Total Allocated Memory: \(String(format: "%.2f", viewModel.memoryUsage.totalMemory))GB")
-                        .font(.system(size: 10).bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Total Allocated Memory: \(String(format: "%.2f", viewModel.memoryUsage.totalMemory))GB")
+                            .font(.system(size: 10).bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Physical Memory: \(String(format: "%.2f", viewModel.memoryUsage.physical))GB")
-                        .font(.system(size: 10).bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Physical Memory: \(String(format: "%.2f", viewModel.memoryUsage.physical))GB")
+                            .font(.system(size: 10).bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Network Received: \(Int(viewModel.rxCurrentSpeed.rounded()))KB/s")
-                        .font(.system(size: 10).bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Network Received: \(Int(viewModel.rxCurrentSpeed.rounded()))KB/s")
+                            .font(.system(size: 10).bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
 
-                    Text("Network Sent: \(Int(viewModel.txCurrentSpeed.rounded()))KB/s")
-                        .font(.system(size: 10).bold())
-                        .frame(maxWidth: .infinity, alignment: .leading)
+                        Text("Network Sent: \(Int(viewModel.txCurrentSpeed.rounded()))KB/s")
+                            .font(.system(size: 10).bold())
+                            .frame(maxWidth: .infinity, alignment: .leading)
+                    }
+                    .frame(width: 300)
 
-                    Text("\(version) (\(bundle))")
-                        .font(.footnote)
-                        .frame(maxWidth: .infinity, alignment: .trailing)
+                    Spacer()
+
+                    VStack {
+                        Spacer()
+
+                        Text("\(version) (\(bundle))")
+                            .font(.footnote)
+                    }
+                    .frame(width: 100, alignment: .trailing)
                 }
             }
             .padding(.leading, 20)
