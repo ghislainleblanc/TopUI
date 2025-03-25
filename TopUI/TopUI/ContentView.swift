@@ -46,7 +46,10 @@ struct ContentView: View {
                                 )
                             }
                         }
-                        .frame(width: CGFloat(viewModel.cpuUsage.count * 12))
+                        .frame(
+                            width: CGFloat(viewModel.cpuUsage.count * 12),
+                            height: CGFloat(viewModel.cpuUsage.count * 8)
+                        )
                         .chartXScale(domain: 0...viewModel.cpuUsage.count + 1)
                         .chartXAxis {
                             AxisMarks(values: .automatic(desiredCount: viewModel.cpuUsage.count)) { value in
@@ -133,7 +136,10 @@ struct ContentView: View {
             .padding(.trailing, 20)
             .padding(.vertical, 10)
         }
-        .frame(maxWidth: CGFloat(viewModel.cpuUsage.count * 12) + 150)
+        .frame(
+            maxWidth: CGFloat(viewModel.cpuUsage.count * 12) + 150,
+            maxHeight: CGFloat(viewModel.cpuUsage.count * 12) + 280
+        )
     }
 }
 
