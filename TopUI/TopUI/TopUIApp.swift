@@ -9,6 +9,8 @@ import SwiftUI
 
 @main
 struct TopUIApp: App {
+    @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
+
     @State private var contentViewModel = ContentViewModel()
 
     var body: some Scene {
