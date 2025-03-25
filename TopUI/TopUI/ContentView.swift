@@ -24,20 +24,20 @@ struct ContentView: View {
         ZStack {
             Color(.windowBackgroundColor).ignoresSafeArea()
 
-            VStack(spacing: 0) {
-                HStack(spacing: 6) {
-                    VStack(spacing: 0) {
+            VStack {
+                HStack {
+                    VStack {
                         ForEach(viewModel.cpuUsage) { coreUsage in
                             Text("Core \(coreUsage.id): \(Int(coreUsage.usage * 100))%")
                                 .font(.system(size: 10).bold())
                                 .frame(maxWidth: .infinity, alignment: .leading)
                         }
                     }
-                    .frame(width: 100)
+                    .frame(width: 80)
 
                     Spacer()
 
-                    VStack(spacing: 10) {
+                    VStack {
                         Chart {
                             ForEach(viewModel.cpuUsage) { coreUsage in
                                 BarMark(
@@ -57,7 +57,7 @@ struct ContentView: View {
                         }
                         .chartYScale(domain: 0...100)
 
-                        VStack(spacing: 0) {
+                        VStack {
                             Chart {
                                 BarMark(x: .value("Usage", viewModel.gpuUsage))
                             }
@@ -78,7 +78,7 @@ struct ContentView: View {
                     .padding(.horizontal, 10)
 
                 HStack {
-                    VStack(spacing: 0) {
+                    VStack {
                         Text("Free Memory: \(String(format: "%.2f", viewModel.memoryUsage.free))GB")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -115,7 +115,7 @@ struct ContentView: View {
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
-                    .frame(width: 300)
+                    .frame(width: 180)
 
                     Spacer()
 
@@ -127,11 +127,13 @@ struct ContentView: View {
                     }
                     .frame(width: 100, alignment: .trailing)
                 }
+                .frame(height: 120)
             }
             .padding(.leading, 20)
             .padding(.trailing, 20)
             .padding(.vertical, 10)
         }
+        .frame(maxWidth: CGFloat(viewModel.cpuUsage.count * 12) + 150)
     }
 }
 
