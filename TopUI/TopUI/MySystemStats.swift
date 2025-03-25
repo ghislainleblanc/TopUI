@@ -12,8 +12,8 @@ import Foundation
 
 final class MySystemStats {
     private let cpuUsageSubject = CurrentValueSubject<[CoreUsage], Never>([])
-    var cpuUsagePublisher: AnyPublisher<[CoreUsage], Never> {
-        cpuUsageSubject.eraseToAnyPublisher()
+    var cpuUsagePublisher: some Publisher<[CoreUsage], Never> {
+        cpuUsageSubject
     }
 
     private let memoryUsageSubject = CurrentValueSubject<MemoryUsage, Never>(
@@ -26,20 +26,20 @@ final class MySystemStats {
             physical: 0
         )
     )
-    var memoryUsagePublisher: AnyPublisher<MemoryUsage, Never> {
-        memoryUsageSubject.eraseToAnyPublisher()
+    var memoryUsagePublisher: some Publisher<MemoryUsage, Never> {
+        memoryUsageSubject
     }
 
     private let gpuUsageSubject = CurrentValueSubject<Int, Never>(0)
-    var gpuUsagePublisher: AnyPublisher<Int, Never> {
-        gpuUsageSubject.eraseToAnyPublisher()
+    var gpuUsagePublisher: some Publisher<Int, Never> {
+        gpuUsageSubject
     }
 
     private let networkUsageSubject = CurrentValueSubject<NetworkUsage, Never>(
         .init(rxBytesPerSecond: 0, txBytesPerSecond: 0)
     )
-    var networkUsagePublisher: AnyPublisher<NetworkUsage, Never> {
-        networkUsageSubject.eraseToAnyPublisher()
+    var networkUsagePublisher: some Publisher<NetworkUsage, Never> {
+        networkUsageSubject
     }
 
     private var cpuInfo: processor_info_array_t?
