@@ -19,8 +19,6 @@ import Foundation
         physical: 0
     )
     private(set) var gpuUsage = 0
-    private(set) var rxSpeeds = [Double](repeating: 0, count: 50)
-    private(set) var txSpeeds = [Double](repeating: 0, count: 50)
     private(set) var rxCurrentSpeed: Double = 0
     private(set) var txCurrentSpeed: Double = 0
 
@@ -56,13 +54,6 @@ import Foundation
                     Double(Int(networkUsage.txBytesPerSecond) - Int(previousNetworkUsage.txBytesPerSecond)) * 2
                 ) / 1024.0
 
-                if self.rxSpeeds.count > 50 {
-                    self.rxSpeeds.removeFirst()
-                    self.txSpeeds.removeFirst()
-                }
-
-                self.rxSpeeds.append(rxSpeed)
-                self.txSpeeds.append(txSpeed)
                 self.rxCurrentSpeed = rxSpeed
                 self.txCurrentSpeed = txSpeed
             }
