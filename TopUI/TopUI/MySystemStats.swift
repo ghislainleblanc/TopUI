@@ -10,7 +10,7 @@
 import Combine
 import Foundation
 
-final class MySystemStats {
+class MySystemStats {
     private let cpuUsageSubject = CurrentValueSubject<[CoreUsage], Never>([])
     var cpuUsagePublisher: some Publisher<[CoreUsage], Never> {
         cpuUsageSubject
@@ -84,8 +84,7 @@ final class MySystemStats {
 }
 
 private extension MySystemStats {
-    @objc
-    func updateInfo() {
+    @objc func updateInfo() {
         getCPUUsage()
         getMemoryUsage()
         getGPUUsage()

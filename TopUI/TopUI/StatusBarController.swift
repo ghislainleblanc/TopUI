@@ -26,9 +26,7 @@ class StatusBarController {
 }
 
 private extension StatusBarController {
-    @MainActor
-    @objc
-    func quit() {
+    @objc func quit() {
         NSApp.terminate(nil)
     }
 }
