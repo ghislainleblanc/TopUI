@@ -1,2 +1,2 @@
 # TopUI
-A Mac ressource monitor
+A macOS ressource monitor
