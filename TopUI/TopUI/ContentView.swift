@@ -128,7 +128,7 @@ struct ContentView: View {
                         Spacer()
 
                         Text("\(version) (\(bundle))")
-                            .font(.footnote)
+                            .font(.system(size: 6))
                     }
                     .frame(width: 100, alignment: .trailing)
                 }
