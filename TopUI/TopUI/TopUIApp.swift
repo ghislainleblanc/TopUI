@@ -11,11 +11,9 @@ import SwiftUI
 struct TopUIApp: App {
     @NSApplicationDelegateAdaptor(AppDelegate.self) var appDelegate
 
-    @State private var contentViewModel = ContentViewModel()
-
     var body: some Scene {
         WindowGroup {
-            ContentView(viewModel: contentViewModel)
+            ContentView()
                 .onAppear {
                     for window in NSApplication.shared.windows {
                         window.styleMask = [.borderless]

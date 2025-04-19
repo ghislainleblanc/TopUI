@@ -9,11 +9,7 @@ import Charts
 import SwiftUI
 
 struct ContentView: View {
-    @State private var viewModel: ContentViewModel
-
-    init(viewModel: ContentViewModel) {
-        self.viewModel = viewModel
-    }
+    @State private var viewModel = ContentViewModel()
 
     // swiftlint:disable force_cast
     private let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -32,7 +28,6 @@ struct ContentView: View {
         ZStack {
             GlassShineBackgroundView()
                 .ignoresSafeArea()
-//            Color(.windowBackgroundColor).ignoresSafeArea()
 
             VStack {
                 HStack {
@@ -148,5 +143,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView(viewModel: .init())
+    ContentView()
 }
