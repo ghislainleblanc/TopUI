@@ -30,7 +30,9 @@ struct ContentView: View {
 
     var body: some View {
         ZStack {
-            Color(.windowBackgroundColor).ignoresSafeArea()
+            GlassShineBackgroundView()
+                .ignoresSafeArea()
+//            Color(.windowBackgroundColor).ignoresSafeArea()
 
             VStack {
                 HStack {
