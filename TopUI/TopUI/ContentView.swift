@@ -9,7 +9,7 @@ import Charts
 import SwiftUI
 
 struct ContentView: View {
-    @State private var viewModel = ContentViewModel()
+    @State private var viewModel: ContentViewModel
 
     // swiftlint:disable force_cast
     private let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
@@ -22,6 +22,10 @@ struct ContentView: View {
 
     private var cpuHeight: CGFloat {
         CGFloat(max(viewModel.cpuUsage.count, 14) * 8)
+    }
+
+    init(viewModel: ContentViewModel) {
+        self.viewModel = viewModel
     }
 
     var body: some View {
@@ -143,5 +147,5 @@ struct ContentView: View {
 }
 
 #Preview {
-    ContentView()
+    ContentView(viewModel: ContentViewModel())
 }
