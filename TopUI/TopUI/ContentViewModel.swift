@@ -19,8 +19,8 @@ import Foundation
         physical: 0
     )
     private(set) var gpuUsage = 0
-    private(set) var rxCurrentSpeed: Double = 0
-    private(set) var txCurrentSpeed: Double = 0
+    private(set) var rxCurrentSpeed = 0.0
+    private(set) var txCurrentSpeed = 0.0
 
     private let mySystemStats = MySystemStats()
 
@@ -28,35 +28,37 @@ import Foundation
     private var cancellables = [AnyCancellable]()
 
     init() {
-        mySystemStats.cpuUsagePublisher.sink(receiveValue: { [weak self] cpuUsage in
-            self?.cpuUsage = cpuUsage
-        })
-        .store(in: &cancellables)
+        mySystemStats
+            .$coreUsages
+            .assign(to: \.cpuUsage, on: self)
+            .store(in: &cancellables)
 
-        mySystemStats.memoryUsagePublisher.sink(receiveValue: { [weak self] memoryUsage in
-            self?.memoryUsage = memoryUsage
-        })
-        .store(in: &cancellables)
+        mySystemStats
+            .$memoryUsage
+            .assign(to: \.memoryUsage, on: self)
+            .store(in: &cancellables)
 
-        mySystemStats.gpuUsagePublisher.sink(receiveValue: { [weak self] gpuUsage in
-            self?.gpuUsage = gpuUsage
-        })
-        .store(in: &cancellables)
+        mySystemStats
+            .$gpuUsage
+            .assign(to: \.gpuUsage, on: self)
+            .store(in: &cancellables)
 
-        mySystemStats.networkUsagePublisher.sink(receiveValue: { [weak self] networkUsage in
-            guard let self else { return }
+        mySystemStats
+            .$networkUsage
+            .sink(receiveValue: { [weak self] networkUsage in
+                guard let self else { return }
 
-            if let previousNetworkUsage = self.previousNetworkUsage {
-                let rxSpeed = (
-                    Double(Int(networkUsage.rxBytesPerSecond) - Int(previousNetworkUsage.rxBytesPerSecond)) * 2
-                ) / 1024.0
-                let txSpeed = (
-                    Double(Int(networkUsage.txBytesPerSecond) - Int(previousNetworkUsage.txBytesPerSecond)) * 2
-                ) / 1024.0
+                if let previousNetworkUsage = self.previousNetworkUsage {
+                    let rxSpeed = (
+                        Double(Int(networkUsage.rxBytesPerSecond) - Int(previousNetworkUsage.rxBytesPerSecond)) * 2
+                    ) / 1024.0
+                    let txSpeed = (
+                        Double(Int(networkUsage.txBytesPerSecond) - Int(previousNetworkUsage.txBytesPerSecond)) * 2
+                    ) / 1024.0
 
-                self.rxCurrentSpeed = rxSpeed
-                self.txCurrentSpeed = txSpeed
-            }
+                    self.rxCurrentSpeed = rxSpeed
+                    self.txCurrentSpeed = txSpeed
+                }
 
             self.previousNetworkUsage = networkUsage
         })

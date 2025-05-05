@@ -11,36 +11,17 @@ import Combine
 import Foundation
 
 class MySystemStats {
-    private let cpuUsageSubject = CurrentValueSubject<[CoreUsage], Never>([])
-    var cpuUsagePublisher: some Publisher<[CoreUsage], Never> {
-        cpuUsageSubject
-    }
-
-    private let memoryUsageSubject = CurrentValueSubject<MemoryUsage, Never>(
-        .init(
-            free: 0,
-            active: 0,
-            inactive: 0,
-            wired: 0,
-            compressed: 0,
-            physical: 0
-        )
+    @Published private(set) var coreUsages = [CoreUsage]()
+    @Published private(set) var memoryUsage: MemoryUsage = .init(
+        free: 0,
+        active: 0,
+        inactive: 0,
+        wired: 0,
+        compressed: 0,
+        physical: 0
     )
-    var memoryUsagePublisher: some Publisher<MemoryUsage, Never> {
-        memoryUsageSubject
-    }
-
-    private let gpuUsageSubject = CurrentValueSubject<Int, Never>(0)
-    var gpuUsagePublisher: some Publisher<Int, Never> {
-        gpuUsageSubject
-    }
-
-    private let networkUsageSubject = CurrentValueSubject<NetworkUsage, Never>(
-        .init(rxBytesPerSecond: 0, txBytesPerSecond: 0)
-    )
-    var networkUsagePublisher: some Publisher<NetworkUsage, Never> {
-        networkUsageSubject
-    }
+    @Published private(set) var gpuUsage = 0
+    @Published private(set) var networkUsage: NetworkUsage = .init(rxBytesPerSecond: 0, txBytesPerSecond: 0)
 
     private var cpuInfo: processor_info_array_t?
     private var prevCpuInfo: processor_info_array_t?
@@ -93,7 +74,8 @@ private extension MySystemStats {
 
     func getMemoryUsage() {
         let systemMemoryUsage = System.memoryUsage()
-        let memoryUsage = MemoryUsage(
+
+        memoryUsage = MemoryUsage(
             free: systemMemoryUsage.free,
             active: systemMemoryUsage.active,
             inactive: systemMemoryUsage.inactive,
@@ -101,8 +83,6 @@ private extension MySystemStats {
             compressed: systemMemoryUsage.compressed,
             physical: System.physicalMemory()
         )
-
-        memoryUsageSubject.send(memoryUsage)
     }
 
     func getCPUUsage() {
@@ -119,8 +99,8 @@ private extension MySystemStats {
 
         CPUUsageLock.lock()
 
-        var coreUsages = [CoreUsage]()
-        coreUsages.reserveCapacity(numCPUs)
+        var newCoreUsages = [CoreUsage]()
+        newCoreUsages.reserveCapacity(numCPUs)
 
         for ctr in 0..<Int32(numCPUs) {
             guard let cpuInfo else { return }
@@ -145,7 +125,7 @@ private extension MySystemStats {
                 total = inUse + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)]
             }
 
-            coreUsages.append(.init(id: ctr + 1, usage: Float(inUse) / Float(total)))
+            newCoreUsages.append(.init(id: ctr + 1, usage: Float(inUse) / Float(total)))
         }
 
         CPUUsageLock.unlock()
@@ -162,7 +142,7 @@ private extension MySystemStats {
         cpuInfo = nil
         numCpuInfo = 0
 
-        cpuUsageSubject.send(coreUsages)
+        coreUsages = newCoreUsages
     }
 
     func getGPUUsage() {
@@ -212,7 +192,7 @@ private extension MySystemStats {
                     }
                 ]
 
-                gpuUsageSubject.send(utilizationCandidates.reduce(nil, { $0 ?? $1 }) ?? 0)
+                gpuUsage = utilizationCandidates.reduce(nil, { $0 ?? $1 }) ?? 0
             }
         }
     }
@@ -235,6 +215,6 @@ private extension MySystemStats {
             freeifaddrs(ifaddr)
         }
 
-        networkUsageSubject.send(.init(rxBytesPerSecond: rxBytes, txBytesPerSecond: txBytes))
+        networkUsage = .init(rxBytesPerSecond: rxBytes, txBytesPerSecond: txBytes)
     }
 }
