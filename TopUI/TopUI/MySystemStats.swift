@@ -28,8 +28,9 @@ class MySystemStats {
     private var numCpuInfo: mach_msg_type_number_t = 0
     private var numPrevCpuInfo: mach_msg_type_number_t = 0
     private var numCPUs = 0
-    private var updateTimer: Timer?
     private let CPUUsageLock = NSLock()
+
+    private var cancellables = [AnyCancellable]()
 
     init() {
         [CTL_HW, HW_NCPU].withUnsafeBufferPointer { mib in
@@ -50,22 +51,18 @@ class MySystemStats {
     }
 
     func startMonitoring() {
-        updateTimer = Timer.scheduledTimer(
-            timeInterval: 0.5,
-            target: self,
-            selector: #selector(updateInfo),
-            userInfo: nil,
-            repeats: true
-        )
-    }
-
-    func stopMonitoring() {
-        updateTimer?.invalidate()
+        Timer
+            .publish(every: 0.5, on: .main, in: .common)
+            .autoconnect()
+            .sink { [weak self] _ in
+                self?.updateInfo()
+            }
+            .store(in: &cancellables)
     }
 }
 
 private extension MySystemStats {
-    @objc func updateInfo() {
+    func updateInfo() {
         getCPUUsage()
         getMemoryUsage()
         getGPUUsage()
