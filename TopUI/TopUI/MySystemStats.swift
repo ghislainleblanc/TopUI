@@ -10,7 +10,7 @@
 import Combine
 import Foundation
 
-class MySystemStats {
+final class MySystemStats {
     @Published private(set) var coreUsages = [CoreUsage]()
     @Published private(set) var memoryUsage: MemoryUsage = .init(
         free: 0,

@@ -8,7 +8,7 @@
 import Combine
 import Foundation
 
-@Observable class ContentViewModel {
+@Observable final class ContentViewModel {
     private(set) var cpuUsage = [CoreUsage]()
     private(set) var memoryUsage = MemoryUsage(
         free: 0,

@@ -8,7 +8,7 @@
 import SwiftUI
 
 @MainActor
-class StatusBarController {
+final class StatusBarController {
     static let shared = StatusBarController()
 
     private let statusItem = NSStatusBar.system.statusItem(withLength: NSStatusItem.variableLength)
