@@ -16,6 +16,8 @@ import Foundation
         inactive: 0,
         wired: 0,
         compressed: 0,
+        total: 0,
+        used: 0,
         physical: 0
     )
     private(set) var gpuUsage = 0

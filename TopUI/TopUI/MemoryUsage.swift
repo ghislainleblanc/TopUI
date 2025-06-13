@@ -8,14 +8,12 @@
 import Foundation
 
 struct MemoryUsage {
-    let free: Double
-    let active: Double
-    let inactive: Double
-    let wired: Double
-    let compressed: Double
-    let physical: Double
-
-    var totalMemory: Double {
-        free + active + inactive + wired + compressed
-    }
+    let free: UInt64
+    let active: UInt64
+    let inactive: UInt64
+    let wired: UInt64
+    let compressed: UInt64
+    let total: UInt64
+    let used: UInt64
+    let physical: UInt64
 }

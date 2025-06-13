@@ -12,16 +12,18 @@ import Foundation
 
 final class MySystemStats {
     @Published private(set) var coreUsages = [CoreUsage]()
-    @Published private(set) var memoryUsage: MemoryUsage = .init(
+    @Published private(set) var memoryUsage = MemoryUsage(
         free: 0,
         active: 0,
         inactive: 0,
         wired: 0,
         compressed: 0,
+        total: 0,
+        used: 0,
         physical: 0
     )
     @Published private(set) var gpuUsage = 0
-    @Published private(set) var networkUsage: NetworkUsage = .init(rxBytesPerSecond: 0, txBytesPerSecond: 0)
+    @Published private(set) var networkUsage = NetworkUsage(rxBytesPerSecond: 0, txBytesPerSecond: 0)
 
     private var cpuInfo: processor_info_array_t?
     private var prevCpuInfo: processor_info_array_t?
@@ -70,15 +72,40 @@ private extension MySystemStats {
     }
 
     func getMemoryUsage() {
-        let systemMemoryUsage = System.memoryUsage()
+        var stats = vm_statistics64()
+        var count = UInt32(MemoryLayout<vm_statistics64_data_t>.size / MemoryLayout<integer_t>.size)
+
+        let hostVMInfo64: host_flavor_t = 4
+        let result = withUnsafeMutablePointer(to: &stats) {
+            $0.withMemoryRebound(to: integer_t.self, capacity: Int(count)) {
+                host_statistics64(mach_host_self(), hostVMInfo64, $0, &count)
+            }
+        }
+
+        if result != KERN_SUCCESS {
+            return
+        }
+
+        let pageSize = UInt64(vm_kernel_page_size)
+
+        let free = UInt64(stats.free_count) * pageSize
+        let active = UInt64(stats.active_count) * pageSize
+        let inactive = UInt64(stats.inactive_count) * pageSize
+        let wired = UInt64(stats.wire_count) * pageSize
+        let compressed = UInt64(stats.compressor_page_count) * pageSize
+
+        let total = free + active + inactive + wired + compressed
+        let used = active + inactive + wired + compressed
 
         memoryUsage = MemoryUsage(
-            free: systemMemoryUsage.free,
-            active: systemMemoryUsage.active,
-            inactive: systemMemoryUsage.inactive,
-            wired: systemMemoryUsage.wired,
-            compressed: systemMemoryUsage.compressed,
-            physical: System.physicalMemory()
+            free: free,
+            active: active,
+            inactive: inactive,
+            wired: wired,
+            compressed: compressed,
+            total: total,
+            used: used,
+            physical: 0
         )
     }
 

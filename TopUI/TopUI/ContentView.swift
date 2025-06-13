@@ -88,31 +88,31 @@ struct ContentView: View {
 
                 HStack {
                     VStack {
-                        Text("Free Memory: \(String(format: "%.2f", viewModel.memoryUsage.free))GB")
+                        Text("Free Memory: \(viewModel.memoryUsage.free.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text("Active Memory: \(String(format: "%.2f", viewModel.memoryUsage.active))GB")
+                        Text("Active Memory: \(viewModel.memoryUsage.active.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text("Inactive Memory: \(String(format: "%.2f", viewModel.memoryUsage.inactive))GB")
+                        Text("Inactive Memory: \(viewModel.memoryUsage.inactive.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text("Wired Memory: \(String(format: "%.2f", viewModel.memoryUsage.wired))GB")
+                        Text("Wired Memory: \(viewModel.memoryUsage.wired.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text("Compressed Memory: \(String(format: "%.2f", viewModel.memoryUsage.compressed))GB")
+                        Text("Compressed Memory: \(viewModel.memoryUsage.compressed.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text("Total Allocated Memory: \(String(format: "%.2f", viewModel.memoryUsage.totalMemory))GB")
+                        Text("Total Allocated Memory: \(viewModel.memoryUsage.total.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text("Physical Memory: \(String(format: "%.2f", viewModel.memoryUsage.physical))GB")
+                        Text("Physical Memory: \(viewModel.memoryUsage.physical.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
