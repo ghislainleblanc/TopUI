@@ -21,8 +21,8 @@ import Foundation
         physical: 0
     )
     private(set) var gpuUsage = 0
-    private(set) var rxCurrentSpeed = 0.0
-    private(set) var txCurrentSpeed = 0.0
+    private(set) var rxCurrentSpeed = UInt64.zero
+    private(set) var txCurrentSpeed = UInt64.zero
 
     private let mySystemStats = MySystemStats()
 
@@ -51,20 +51,16 @@ import Foundation
                 guard let self else { return }
 
                 if let previousNetworkUsage = self.previousNetworkUsage {
-                    let rxSpeed = (
-                        Double(Int(networkUsage.rxBytesPerSecond) - Int(previousNetworkUsage.rxBytesPerSecond)) * 2
-                    ) / 1024.0
-                    let txSpeed = (
-                        Double(Int(networkUsage.txBytesPerSecond) - Int(previousNetworkUsage.txBytesPerSecond)) * 2
-                    ) / 1024.0
+                    let rxSpeed = (networkUsage.rxBytesPerSecond - previousNetworkUsage.rxBytesPerSecond) * 2
+                    let txSpeed = (networkUsage.txBytesPerSecond - previousNetworkUsage.txBytesPerSecond) * 2
 
                     self.rxCurrentSpeed = rxSpeed
                     self.txCurrentSpeed = txSpeed
                 }
 
-            self.previousNetworkUsage = networkUsage
-        })
-        .store(in: &cancellables)
+                self.previousNetworkUsage = networkUsage
+            })
+            .store(in: &cancellables)
 
         mySystemStats.startMonitoring()
     }

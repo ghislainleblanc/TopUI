@@ -104,10 +104,12 @@ struct ContentView: View {
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
+                        // swiftlint:disable:next line_length
                         Text("Compressed Memory: \(viewModel.memoryUsage.compressed.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
+                        // swiftlint:disable:next line_length
                         Text("Total Allocated Memory: \(viewModel.memoryUsage.total.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -116,11 +118,11 @@ struct ContentView: View {
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text("Network Received: \(Int(viewModel.rxCurrentSpeed.rounded()))KB/s")
+                        Text("Network Received: \(viewModel.rxCurrentSpeed.formattedSize(countStyle: .file))/s")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text("Network Sent: \(Int(viewModel.txCurrentSpeed.rounded()))KB/s")
+                        Text("Network Sent: \(viewModel.txCurrentSpeed.formattedSize(countStyle: .file))/s")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
                     }
