@@ -114,10 +114,6 @@ struct ContentView: View {
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        Text("Physical Memory: \(viewModel.memoryUsage.physical.formattedSize(countStyle: .memory))")
-                            .font(.system(size: 10).bold())
-                            .frame(maxWidth: .infinity, alignment: .leading)
-
                         Text("Network Received: \(viewModel.rxCurrentSpeed.formattedSize(countStyle: .file))/s")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
@@ -144,7 +140,7 @@ struct ContentView: View {
             .padding(.trailing, 20)
             .padding(.vertical, 10)
         }
-        .frame(maxWidth: cpuWidth + 150, maxHeight: cpuHeight + 280)
+        .frame(maxWidth: cpuWidth + 150, maxHeight: cpuHeight + 260)
     }
 }
 

@@ -16,9 +16,7 @@ import Foundation
         inactive: 0,
         wired: 0,
         compressed: 0,
-        total: 0,
-        used: 0,
-        physical: 0
+        total: 0
     )
     private(set) var gpuUsage = 0
     private(set) var rxCurrentSpeed = UInt64.zero

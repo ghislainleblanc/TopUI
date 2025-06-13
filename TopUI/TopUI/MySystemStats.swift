@@ -18,9 +18,7 @@ final class MySystemStats {
         inactive: 0,
         wired: 0,
         compressed: 0,
-        total: 0,
-        used: 0,
-        physical: 0
+        total: 0
     )
     @Published private(set) var gpuUsage = 0
     @Published private(set) var networkUsage = NetworkUsage(rxBytesPerSecond: 0, txBytesPerSecond: 0)
@@ -95,7 +93,6 @@ private extension MySystemStats {
         let compressed = UInt64(stats.compressor_page_count) * pageSize
 
         let total = free + active + inactive + wired + compressed
-        let used = active + inactive + wired + compressed
 
         memoryUsage = MemoryUsage(
             free: free,
@@ -103,9 +100,7 @@ private extension MySystemStats {
             inactive: inactive,
             wired: wired,
             compressed: compressed,
-            total: total,
-            used: used,
-            physical: 0
+            total: total
         )
     }
 
@@ -223,8 +218,8 @@ private extension MySystemStats {
 
     func getNetworkUsage() {
         var ifaddr: UnsafeMutablePointer<ifaddrs>?
-        var rxBytes: UInt64 = 0
-        var txBytes: UInt64 = 0
+        var rxBytes = UInt64.zero
+        var txBytes = UInt64.zero
 
         if getifaddrs(&ifaddr) == 0 {
             var ptr = ifaddr
@@ -239,6 +234,6 @@ private extension MySystemStats {
             freeifaddrs(ifaddr)
         }
 
-        networkUsage = .init(rxBytesPerSecond: rxBytes, txBytesPerSecond: txBytes)
+        networkUsage = NetworkUsage(rxBytesPerSecond: rxBytes, txBytesPerSecond: txBytes)
     }
 }

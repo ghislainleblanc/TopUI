@@ -14,6 +14,4 @@ struct MemoryUsage {
     let wired: UInt64
     let compressed: UInt64
     let total: UInt64
-    let used: UInt64
-    let physical: UInt64
 }
