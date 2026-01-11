@@ -49,11 +49,15 @@ import Foundation
                 guard let self else { return }
 
                 if let previousNetworkUsage = self.previousNetworkUsage {
-                    let rxSpeed = (networkUsage.rxBytesPerSecond - previousNetworkUsage.rxBytesPerSecond) * 2
-                    let txSpeed = (networkUsage.txBytesPerSecond - previousNetworkUsage.txBytesPerSecond) * 2
+                    let rxDelta = networkUsage.rxBytesPerSecond >= previousNetworkUsage.rxBytesPerSecond
+                        ? (networkUsage.rxBytesPerSecond - previousNetworkUsage.rxBytesPerSecond)
+                        : 0
+                    let txDelta = networkUsage.txBytesPerSecond >= previousNetworkUsage.txBytesPerSecond
+                        ? (networkUsage.txBytesPerSecond - previousNetworkUsage.txBytesPerSecond)
+                        : 0
 
-                    self.rxCurrentSpeed = rxSpeed
-                    self.txCurrentSpeed = txSpeed
+                    self.rxCurrentSpeed = rxDelta * 2
+                    self.txCurrentSpeed = txDelta * 2
                 }
 
                 self.previousNetworkUsage = networkUsage

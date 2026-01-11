@@ -144,7 +144,9 @@ private extension MySystemStats {
                 total = inUse + cpuInfo[Int(CPU_STATE_MAX * ctr + CPU_STATE_IDLE)]
             }
 
-            newCoreUsages.append(.init(id: ctr + 1, usage: Float(inUse) / Float(total)))
+            let rawUsage = total > 0 ? Float(inUse) / Float(total) : 0
+            let clampedUsage = rawUsage.isFinite ? max(0, min(rawUsage, 1)) : 0
+            newCoreUsages.append(.init(id: ctr + 1, usage: clampedUsage))
         }
 
         CPUUsageLock.unlock()
