@@ -11,10 +11,9 @@ import SwiftUI
 struct ContentView: View {
     @State private var viewModel: ContentViewModel
 
-    // swiftlint:disable force_cast
     private let version = Bundle.main.infoDictionary!["CFBundleShortVersionString"] as! String
+
     private let bundle = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
-    // swiftlint:enable force_cast
 
     private var cpuWidth: CGFloat {
         CGFloat(max(viewModel.cpuUsage.count, 14) * 12)
@@ -104,12 +103,10 @@ struct ContentView: View {
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        // swiftlint:disable:next line_length
                         Text("Compressed Memory: \(viewModel.memoryUsage.compressed.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)
 
-                        // swiftlint:disable:next line_length
                         Text("Total Allocated Memory: \(viewModel.memoryUsage.total.formattedSize(countStyle: .memory))")
                             .font(.system(size: 10).bold())
                             .frame(maxWidth: .infinity, alignment: .leading)

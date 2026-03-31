@@ -201,7 +201,7 @@ private extension MySystemStats {
                     accelerators.append(
                         Dictionary(
                             uniqueKeysWithValues: (serviceDict.takeRetainedValue() as NSDictionary as Dictionary).map {
-                                ($0 as! String, $1) // swiftlint:disable:this force_cast
+                                ($0 as! String, $1)
                             }
                         )
                     )
