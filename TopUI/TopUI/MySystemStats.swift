@@ -30,6 +30,7 @@ final class MySystemStats {
     private var numCPUs = 0
     private let CPUUsageLock = NSLock()
 
+    private var previousHardwareWaitTime: Int?
     private var cancellables = [AnyCancellable]()
 
     init() {
@@ -177,12 +178,15 @@ private extension MySystemStats {
         ) == kIOReturnSuccess {
             repeat {
                 let entry = IOIteratorNext(iterator)
+
                 defer {
                     IOObjectRelease(entry)
                 }
+
                 guard entry != 0 else {
                     break
                 }
+
                 var serviceDict: Unmanaged<CFMutableDictionary>?
 
                 guard IORegistryEntryCreateCFProperties(
@@ -190,8 +194,9 @@ private extension MySystemStats {
                     kCFAllocatorDefault,
                     0
                 ) == kIOReturnSuccess else {
-                    break
+                    continue
                 }
+
                 if let serviceDict {
                     accelerators.append(
                         Dictionary(
@@ -206,14 +211,26 @@ private extension MySystemStats {
             IOObjectRelease(iterator)
 
             if let statistics = accelerators.first?["PerformanceStatistics"] {
-                let utilizationCandidates = [
-                    (statistics["Device Utilization %"] as? NSNumber)?.intValue,
-                    (statistics["hardwareWaitTime"] as? NSNumber).map {
-                        max(min($0.intValue / 1000 / 1000 / 10, 100), 0)
-                    }
-                ]
+                // Try direct utilization percentage keys first.
+                let directUtilization =
+                    (statistics["Device Utilization %"] as? NSNumber)?.intValue
+                    ?? (statistics["GPU Activity(%)"] as? NSNumber)?.intValue
 
-                gpuUsage = utilizationCandidates.reduce(nil, { $0 ?? $1 }) ?? 0
+                if let directUtilization {
+                    gpuUsage = max(min(directUtilization, 100), 0)
+                    return
+                }
+
+                // Fall back to hardwareWaitTime delta (cumulative counter in nanoseconds).
+                if let currentWaitTime = (statistics["hardwareWaitTime"] as? NSNumber)?.intValue {
+                    if let previousWaitTime = previousHardwareWaitTime {
+                        let delta = currentWaitTime - previousWaitTime
+                        // Timer fires every 0.5s = 500,000,000 ns
+                        let usage = max(min(delta / 5_000_000, 100), 0)
+                        gpuUsage = usage
+                    }
+                    previousHardwareWaitTime = currentWaitTime
+                }
             }
         }
     }
